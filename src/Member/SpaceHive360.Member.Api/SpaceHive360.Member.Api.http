@@ -1,0 +1,6 @@
+@SpaceHive360.Member.Api_HostAddress = http://localhost:5129
+
+GET {{SpaceHive360.Member.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
