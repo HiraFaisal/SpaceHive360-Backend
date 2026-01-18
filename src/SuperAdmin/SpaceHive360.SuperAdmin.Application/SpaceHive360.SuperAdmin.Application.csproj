@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SpaceHive360.SuperAdmin.Domain\SpaceHive360.SuperAdmin.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,3 +1,33 @@
 <Solution>
-  <Folder Name="/db-scripts/" />
+  <Folder Name="/db-scripts/">
+    <File Path="db-scripts/db_admin.txt" />
+    <File Path="db-scripts/db_member.txt" />
+    <File Path="db-scripts/db_schema.txt" />
+    <File Path="db-scripts/db_superadmin.txt" />
+  </Folder>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Admin/">
+    <Project Path="src/Admin/SpaceHive360.Admin.Api/SpaceHive360.Admin.Api.csproj" Id="40f77373-16e4-4efe-bf4f-eba56029fea7" />
+    <Project Path="src/Admin/SpaceHive360.Admin.Application/SpaceHive360.Admin.Application.csproj" Id="340e0eec-95f7-40fc-ad38-6528dda989ba" />
+    <Project Path="src/Admin/SpaceHive360.Admin.Domain/SpaceHive360.Admin.Domain.csproj" Id="d405f9bb-714b-4833-8fca-00d1f6577962" />
+    <Project Path="src/Admin/SpaceHive360.Admin.Infrastructure/SpaceHive360.Admin.Infrastructure.csproj" Id="51c551a8-84c0-4f0e-a0d5-cb20a95559c8" />
+  </Folder>
+  <Folder Name="/src/Integration/">
+    <Project Path="src/Integration/SpaceHive360.Integration.Api/SpaceHive360.Integration.Api.csproj" Id="32e23027-4dcd-4f38-ba10-3d6e09468755" />
+    <Project Path="src/Integration/SpaceHive360.Integration.Application/SpaceHive360.Integration.Application.csproj" Id="8d8424cf-3a5d-4784-9763-36603c913e16" />
+    <Project Path="src/Integration/SpaceHive360.Integration.Domain/SpaceHive360.Integration.Domain.csproj" Id="6b925d7e-79e8-4c22-a9c3-5d1f111e6c6a" />
+    <Project Path="src/Integration/SpaceHive360.Integration.Infrastructure/SpaceHive360.Integration.Infrastructure.csproj" Id="eb9ee6b9-cec9-4760-8b20-6250f6808aa3" />
+  </Folder>
+  <Folder Name="/src/Member/">
+    <Project Path="src/Member/SpaceHive360.Member.Api/SpaceHive360.Member.Api.csproj" Id="29efddc6-3cbf-4304-973e-6841b765de0c" />
+    <Project Path="src/Member/SpaceHive360.Member.Application/SpaceHive360.Member.Application.csproj" Id="acd44566-70d0-4b92-9f4a-8aff7d257751" />
+    <Project Path="src/Member/SpaceHive360.Member.Domain/SpaceHive360.Member.Domain.csproj" Id="5c3836f3-ee6f-4da7-9f45-f1a1c8b8c39e" />
+    <Project Path="src/Member/SpaceHive360.Member.Infrastructure/SpaceHive360.Member.Infrastructure.csproj" Id="cbe7eaef-ea23-43d2-afe3-861b5d5f73a5" />
+  </Folder>
+  <Folder Name="/src/SuperAdmin/">
+    <Project Path="src/SuperAdmin/SpaceHive360.SuperAdmin.Api/SpaceHive360.SuperAdmin.Api.csproj" Id="ac8cdde8-1b86-4067-8922-dad34e24bf32" />
+    <Project Path="src/SuperAdmin/SpaceHive360.SuperAdmin.Application/SpaceHive360.SuperAdmin.Application.csproj" Id="b90412d0-2883-4688-8414-923a8f746bf9" />
+    <Project Path="src/SuperAdmin/SpaceHive360.SuperAdmin.Domain/SpaceHive360.SuperAdmin.Domain.csproj" Id="a469edfe-536c-4bba-b74f-e01351a32aa3" />
+    <Project Path="src/SuperAdmin/SpaceHive360.SuperAdmin.Infrastructure/SpaceHive360.SuperAdmin.Infrastructure.csproj" Id="1e337a88-d804-41ca-b509-a3051f7d77dc" />
+  </Folder>
 </Solution>

@@ -10,4 +10,9 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SpaceHive360.Integration.Application\SpaceHive360.Integration.Application.csproj" />
+    <ProjectReference Include="..\SpaceHive360.Integration.Infrastructure\SpaceHive360.Integration.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
