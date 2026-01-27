@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Npgsql" Version="10.0.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SpaceHive360.Admin.Application\SpaceHive360.Admin.Application.csproj" />
     <ProjectReference Include="..\SpaceHive360.Admin.Domain\SpaceHive360.Admin.Domain.csproj" />
   </ItemGroup>

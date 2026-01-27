@@ -15,4 +15,8 @@
     <ProjectReference Include="..\SpaceHive360.Integration.Infrastructure\SpaceHive360.Integration.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
