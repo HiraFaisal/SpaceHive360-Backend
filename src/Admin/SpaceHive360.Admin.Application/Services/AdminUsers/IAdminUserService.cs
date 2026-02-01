@@ -8,5 +8,6 @@ namespace SpaceHive360.Admin.Application.Services.AdminUsers
     public interface IAdminUserService
     {
         Task CreateAsync(AdminUser user);
+        Task<bool> LoginAsync(string email, string password);
     }
 }

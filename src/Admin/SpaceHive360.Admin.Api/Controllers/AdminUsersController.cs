@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SpaceHive360.Admin.Application.DTOs;
 using SpaceHive360.Admin.Application.Services;
 using SpaceHive360.Admin.Application.Services.AdminUsers;
 using SpaceHive360.Admin.Domain.Entities;
@@ -19,5 +20,15 @@ public class AdminUsersController : ControllerBase
     {
         await _service.CreateAsync(user);
         return Ok("Admin user created");
+    }
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(AdminUserLoginDto dto)
+    {
+        var isValid = await _service.LoginAsync(dto.Email, dto.Password);
+
+        if (!isValid)
+            return Unauthorized("Invalid email or password.");
+
+        return Ok("Login successful");
     }
 }

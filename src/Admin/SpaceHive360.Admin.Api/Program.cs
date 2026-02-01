@@ -23,7 +23,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructureDI(builder.Configuration);
 
 // 2. Application DI (Services)
-builder.Services.AddApplicationDI();
+builder.Services.AddApplicationDI(builder.Configuration);
 
 var app = builder.Build();
 
