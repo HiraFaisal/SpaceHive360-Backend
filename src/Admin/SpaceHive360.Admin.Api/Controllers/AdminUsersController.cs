@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SpaceHive360.Admin.Application.DTOs;
 using SpaceHive360.Admin.Application.Services;
 using SpaceHive360.Admin.Application.Services.AdminUsers;
 using SpaceHive360.Admin.Domain.Entities;
 
+[Authorize]
 [ApiController]
 [Route("api/admin-users")]
 public class AdminUsersController : ControllerBase

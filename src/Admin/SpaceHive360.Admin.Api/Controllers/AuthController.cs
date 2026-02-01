@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SpaceHive360.Admin.Application.Services.Auth;
+using Microsoft.AspNetCore.Authorization;
 using static SpaceHive360.Admin.Application.DTOs.Login;
 
 namespace SpaceHive360.Admin.Api.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("api/auth")]
     public class AuthController : ControllerBase
