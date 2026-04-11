@@ -14,9 +14,16 @@ namespace SpaceHive360.Admin.Infrastructure.Data
         }
 
         public DbSet<AdminUser> AdminUsers { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<WorkspaceType> WorkspaceTypes { get; set; }
+        public DbSet<Workspace> Workspaces { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AdminUser>().ToTable("tbl_admin_user");
+            modelBuilder.Entity<Company>().ToTable("tbl_companies");
+            modelBuilder.Entity<WorkspaceType>().ToTable("tbl_workspace_types");
+            modelBuilder.Entity<Workspace>().ToTable("tbl_workspaces");
         }
     }
 }

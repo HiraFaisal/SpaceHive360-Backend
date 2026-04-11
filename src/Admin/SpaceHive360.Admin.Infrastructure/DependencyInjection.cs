@@ -20,6 +20,8 @@ namespace SpaceHive360.Admin.Infrastructure
                 options.UseNpgsql(postgresConnection)
             );
             services.AddScoped<IAdminUserRepository, AdminUserRepository>();
+            services.AddScoped<IWorkspaceTypeRepository, WorkspaceTypeRepository>();
+            services.AddScoped<IWorkspaceRepository, WorkspaceRepository>();
 
             return services;
         }

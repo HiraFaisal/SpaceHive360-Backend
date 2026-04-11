@@ -5,7 +5,7 @@ using SpaceHive360.Admin.Application.Services;
 using SpaceHive360.Admin.Application.Services.AdminUsers;
 using SpaceHive360.Admin.Domain.Entities;
 
-[Authorize]
+[AllowAnonymous]
 [ApiController]
 [Route("api/admin-users")]
 public class AdminUsersController : ControllerBase

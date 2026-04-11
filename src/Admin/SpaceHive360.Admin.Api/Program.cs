@@ -8,8 +8,22 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add Controllers
 builder.Services.AddControllers();
 
+// ===== 1. Configure CORS =====
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000") // Next.js dev URL
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // required if using cookies
+    });
+});
+
+// ===== 2. Swagger =====
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -44,6 +58,10 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+
+// ===== 3. JWT Authentication =====
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -51,8 +69,6 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
-    var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
@@ -70,25 +86,27 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+// ===== 4. DI for Infrastructure & Application =====
 builder.Services.AddInfrastructureDI(builder.Configuration);
-
 builder.Services.AddApplicationDI(builder.Configuration);
 
 var app = builder.Build();
 
+// ===== 5. Middleware =====
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "SpaceHive360 Admin API V1");
-        options.RoutePrefix = string.Empty; 
+        options.RoutePrefix = string.Empty;
     });
 }
 
+app.UseCors("AllowFrontend");
 app.UseHttpsRedirection();
 
-app.UseAuthentication(); 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

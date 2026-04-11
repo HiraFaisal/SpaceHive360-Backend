@@ -1,33 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace SpaceHive360.Admin.Domain.Entities
 {
-    [Table("tbl_admin_user")]
-    public class AdminUser
+    [Table("tbl_companies")]
+    public class Company
     {
         [Key]
-        [Column("rec_id")]  
+        [Column("rec_id")]
         public Guid RecId { get; set; } = Guid.NewGuid();
 
-        [Column("first_name")]
+        [Column("name")]
         [Required]
-        public string FirstName { get; set; } = null!;
-
-        [Column("last_name")]
-        [Required]
-        public string LastName { get; set; } = null!;
+        [MaxLength(150)]
+        public string Name { get; set; } = null!;
 
         [Column("email")]
         [Required]
+        [MaxLength(255)]
         public string Email { get; set; } = null!;
 
-        [Column("password")]
-        [Required]
-        public string Password { get; set; } = null!;
+        [Column("phone")]
+        [MaxLength(30)]
+        public string? Phone { get; set; }
+
+        [Column("address")]
+        public string? Address { get; set; }
+
+        [Column("logo_url")]
+        public string? LogoUrl { get; set; }
 
         [Column("is_active")]
         public bool IsActive { get; set; } = true;
@@ -37,7 +39,5 @@ namespace SpaceHive360.Admin.Domain.Entities
 
         [Column("updated_at")]
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-        [Column("fk_company")]
-        public Guid FkCompany { get; set; } 
     }
 }
