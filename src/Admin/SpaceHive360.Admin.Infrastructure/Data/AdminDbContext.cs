@@ -19,7 +19,7 @@ namespace SpaceHive360.Admin.Infrastructure.Data
         public DbSet<Workspace> Workspaces { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Location> CompanyLocations { get; set; }
-        public DbSet<PaymentTerm> PaymentTerms { get; set; }
+        //public DbSet<PaymentTerm> PaymentTerms { get; set; }
         public DbSet<Plan> Plans { get; set; }
 
         public DbSet<PaymentTerms> PaymentTerms { get; set; }
@@ -33,7 +33,7 @@ namespace SpaceHive360.Admin.Infrastructure.Data
             modelBuilder.Entity<PaymentTerms>().ToTable("tbl_payment_terms");
             modelBuilder.Entity<City>().ToTable("tbl_city");
             modelBuilder.Entity<Location>().ToTable("tbl_company_locations");
-            modelBuilder.Entity<PaymentTerm>().ToTable("tbl_payment_terms");
+            //modelBuilder.Entity<PaymentTerm>().ToTable("tbl_payment_terms");
             modelBuilder.Entity<Plan>(entity =>
             {
                 entity.ToTable("tbl_plans");
