@@ -32,7 +32,9 @@ namespace SpaceHive360.Admin.Infrastructure.Repositories
 
         public async Task<IEnumerable<WorkspaceType>> GetAllAsync()
         {
-            return await _dbSet.ToListAsync();
+            return await _dbSet
+        .Where(x => x.IsActive)
+        .ToListAsync();
         }
 
         public Task UpdateAsync(WorkspaceType entity)

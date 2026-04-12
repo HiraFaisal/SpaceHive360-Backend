@@ -84,7 +84,7 @@ namespace SpaceHive360.Admin.Application.Services.WorkspaceType
             entity.IsActive = false;
             entity.UpdatedAt = DateTime.UtcNow;
 
-            await _repository.UpdateAsync(entity);
+
             await _repository.SaveChangesAsync();
 
             return true;
