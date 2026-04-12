@@ -4,9 +4,12 @@ using SpaceHive360.Admin.Application.Security;
 using SpaceHive360.Admin.Application.Security.JwtToken;
 using SpaceHive360.Admin.Application.Services.AdminUsers;
 using SpaceHive360.Admin.Application.Services.Auth;
+using SpaceHive360.Admin.Application.Services.Files;
+using SpaceHive360.Admin.Application.Services.Plans;
 using SpaceHive360.Admin.Application.Services.PaymentTerms;
 using SpaceHive360.Admin.Application.Services.Workspace;
 using SpaceHive360.Admin.Application.Services.WorkspaceType;
+using SpaceHive360.Admin.Infrastructure.Services;
 
 namespace SpaceHive360.Admin.Application
 {
@@ -24,6 +27,8 @@ namespace SpaceHive360.Admin.Application
             services.AddScoped<IWorkspaceTypeService, WorkspaceTypeService>();
             services.AddScoped<IWorkspaceService, WorkspaceService>();
             services.AddScoped<IPaymentTermsService, PaymentTermsService>();
+            services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IPlanService, PlanService>();
             // ---------------------------
             // Configure JWT Settings
             // ---------------------------
