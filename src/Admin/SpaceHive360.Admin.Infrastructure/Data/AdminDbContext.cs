@@ -18,12 +18,15 @@ namespace SpaceHive360.Admin.Infrastructure.Data
         public DbSet<WorkspaceType> WorkspaceTypes { get; set; }
         public DbSet<Workspace> Workspaces { get; set; }
 
+        public DbSet<PaymentTerms> PaymentTerms { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AdminUser>().ToTable("tbl_admin_user");
             modelBuilder.Entity<Company>().ToTable("tbl_companies");
             modelBuilder.Entity<WorkspaceType>().ToTable("tbl_workspace_types");
             modelBuilder.Entity<Workspace>().ToTable("tbl_workspaces");
+            modelBuilder.Entity<PaymentTerms>().ToTable("tbl_payment_terms");
         }
     }
 }

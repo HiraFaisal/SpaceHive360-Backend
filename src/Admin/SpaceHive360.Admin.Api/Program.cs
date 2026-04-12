@@ -5,7 +5,7 @@ using Microsoft.OpenApi.Models;
 using SpaceHive360.Admin.Application;
 using SpaceHive360.Admin.Infrastructure;
 using System.Text;
-
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 var builder = WebApplication.CreateBuilder(args);
 
 // Add Controllers

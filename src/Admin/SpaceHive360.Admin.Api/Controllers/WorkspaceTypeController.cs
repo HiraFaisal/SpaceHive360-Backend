@@ -23,7 +23,12 @@ namespace SpaceHive360.Admin.Api.Controllers
         {
             try
             {
-                Guid userRecId = Guid.Parse(User.Claims.First(c => c.Type == "recId").Value);
+                var recIdClaim = User.Claims.FirstOrDefault(c => c.Type == "recId");
+
+                if (recIdClaim == null || !Guid.TryParse(recIdClaim.Value, out Guid userRecId))
+                {
+                    return Unauthorized(new { Message = "Invalid or missing user RecId claim." });
+                }
 
                 var id = await _workspaceTypeService.CreateWorkspaceTypeAsync(workspaceType, userRecId);
                 return Ok(new { Message = "Workspace Type created successfully.", Id = id });
