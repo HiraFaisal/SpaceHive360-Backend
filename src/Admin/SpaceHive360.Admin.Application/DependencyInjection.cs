@@ -10,6 +10,7 @@ using SpaceHive360.Admin.Application.Services.PaymentTerms;
 using SpaceHive360.Admin.Application.Services.Workspace;
 using SpaceHive360.Admin.Application.Services.WorkspaceType;
 using SpaceHive360.Admin.Infrastructure.Services;
+using SpaceHive360.Admin.Application.Services.Location;
 
 namespace SpaceHive360.Admin.Application
 {
@@ -29,6 +30,7 @@ namespace SpaceHive360.Admin.Application
             services.AddScoped<IPaymentTermsService, PaymentTermsService>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IPlanService, PlanService>();
+            services.AddScoped<ILocationService, LocationService>();
             // ---------------------------
             // Configure JWT Settings
             // ---------------------------

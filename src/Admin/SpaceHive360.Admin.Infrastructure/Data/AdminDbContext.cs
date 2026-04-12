@@ -32,7 +32,7 @@ namespace SpaceHive360.Admin.Infrastructure.Data
             modelBuilder.Entity<Workspace>().ToTable("tbl_workspaces");
             modelBuilder.Entity<PaymentTerms>().ToTable("tbl_payment_terms");
             modelBuilder.Entity<City>().ToTable("tbl_city");
-            modelBuilder.Entity<Location>().ToTable("tbl_company_locations");
+            modelBuilder.Entity<Location>().ToTable("tbl_location");
             //modelBuilder.Entity<PaymentTerm>().ToTable("tbl_payment_terms");
             modelBuilder.Entity<Plan>(entity =>
             {
