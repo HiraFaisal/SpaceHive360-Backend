@@ -22,6 +22,7 @@ namespace SpaceHive360.Admin.Infrastructure
             services.AddScoped<IAdminUserRepository, AdminUserRepository>();
             services.AddScoped<IWorkspaceTypeRepository, WorkspaceTypeRepository>();
             services.AddScoped<IWorkspaceRepository, WorkspaceRepository>();
+            services.AddScoped<IPlanRepository, PlanRepository>();
 
             return services;
         }
