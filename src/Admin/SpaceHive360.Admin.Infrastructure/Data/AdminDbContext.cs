@@ -19,8 +19,12 @@ namespace SpaceHive360.Admin.Infrastructure.Data
         public DbSet<Workspace> Workspaces { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Location> CompanyLocations { get; set; }
-        public DbSet<PaymentTerm> PaymentTerms { get; set; }
+        //public DbSet<PaymentTerm> PaymentTerms { get; set; }
         public DbSet<Plan> Plans { get; set; }
+
+        public DbSet<PaymentTerms> PaymentTerms { get; set; }
+
+        public DbSet<Feedback> Feedbacks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,9 +32,11 @@ namespace SpaceHive360.Admin.Infrastructure.Data
             modelBuilder.Entity<Company>().ToTable("tbl_companies");
             modelBuilder.Entity<WorkspaceType>().ToTable("tbl_workspace_types");
             modelBuilder.Entity<Workspace>().ToTable("tbl_workspaces");
+            modelBuilder.Entity<PaymentTerms>().ToTable("tbl_payment_terms");
             modelBuilder.Entity<City>().ToTable("tbl_city");
-            modelBuilder.Entity<Location>().ToTable("tbl_company_locations");
-            modelBuilder.Entity<PaymentTerm>().ToTable("tbl_payment_terms");
+            modelBuilder.Entity<Location>().ToTable("tbl_location");
+            //modelBuilder.Entity<PaymentTerm>().ToTable("tbl_payment_terms");
+            modelBuilder.Entity<Feedback>().ToTable("tbl_feedback");
             modelBuilder.Entity<Plan>(entity =>
             {
                 entity.ToTable("tbl_plans");
