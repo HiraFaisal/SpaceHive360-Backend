@@ -11,6 +11,7 @@ using SpaceHive360.Admin.Application.Services.Workspace;
 using SpaceHive360.Admin.Application.Services.WorkspaceType;
 using SpaceHive360.Admin.Infrastructure.Services;
 using SpaceHive360.Admin.Application.Services.Location;
+using SpaceHive360.Admin.Application.Services.Feedback;
 
 namespace SpaceHive360.Admin.Application
 {
@@ -31,6 +32,7 @@ namespace SpaceHive360.Admin.Application
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IPlanService, PlanService>();
             services.AddScoped<ILocationService, LocationService>();
+            services.AddScoped<IFeedbackService, FeedbackService>();
             // ---------------------------
             // Configure JWT Settings
             // ---------------------------

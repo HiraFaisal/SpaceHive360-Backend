@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SpaceHive360.Admin.Domain.IRepositories;
+using ApplicationRepo = SpaceHive360.Admin.Application.IRepositories;
 using SpaceHive360.Admin.Infrastructure.Data;
 using SpaceHive360.Admin.Infrastructure.Repositories;
 
@@ -25,6 +26,7 @@ namespace SpaceHive360.Admin.Infrastructure
             services.AddScoped<IPlanRepository, PlanRepository>();
             services.AddScoped<IPaymentTermsRepository, PaymentTermsRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();
+            services.AddScoped<ApplicationRepo.IFeedbackRepository, FeedbackRepository>();
 
             return services;
         }

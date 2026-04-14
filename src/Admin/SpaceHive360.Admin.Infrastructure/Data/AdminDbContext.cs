@@ -24,6 +24,8 @@ namespace SpaceHive360.Admin.Infrastructure.Data
 
         public DbSet<PaymentTerms> PaymentTerms { get; set; }
 
+        public DbSet<Feedback> Feedbacks { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AdminUser>().ToTable("tbl_admin_user");
@@ -34,6 +36,7 @@ namespace SpaceHive360.Admin.Infrastructure.Data
             modelBuilder.Entity<City>().ToTable("tbl_city");
             modelBuilder.Entity<Location>().ToTable("tbl_location");
             //modelBuilder.Entity<PaymentTerm>().ToTable("tbl_payment_terms");
+            modelBuilder.Entity<Feedback>().ToTable("tbl_feedback");
             modelBuilder.Entity<Plan>(entity =>
             {
                 entity.ToTable("tbl_plans");
