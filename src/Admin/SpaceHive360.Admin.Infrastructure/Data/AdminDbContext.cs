@@ -26,6 +26,8 @@ namespace SpaceHive360.Admin.Infrastructure.Data
 
         public DbSet<Feedback> Feedbacks { get; set; }
 
+        public DbSet<PlanMembership> PlanMemberships { get; set; }
+        public DbSet<PlanBooking> PlanBookings { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AdminUser>().ToTable("tbl_admin_user");
@@ -37,24 +39,55 @@ namespace SpaceHive360.Admin.Infrastructure.Data
             modelBuilder.Entity<Location>().ToTable("tbl_location");
             //modelBuilder.Entity<PaymentTerm>().ToTable("tbl_payment_terms");
             modelBuilder.Entity<Feedback>().ToTable("tbl_feedback");
-            modelBuilder.Entity<Plan>(entity =>
+            // ✅ Membership Plan Mapping
+            modelBuilder.Entity<PlanMembership>(entity =>
             {
-                entity.ToTable("tbl_plans");
+                entity.ToTable("tbl_plan_membership");
 
-                entity.Property(p => p.ImagesJson)
+                entity.Property(p => p.Images)
                       .HasColumnName("images")
                       .HasColumnType("jsonb")
                       .HasConversion(
-                          v => v ?? "[]",                    // C# → DB
-                          v => v                             // DB → C#
+                          v => v ?? "[]",
+                          v => v
                       );
 
-                entity.Property(p => p.FeaturesJson)
+                entity.Property(p => p.Features)
                       .HasColumnName("features")
                       .HasColumnType("jsonb")
                       .HasConversion(
-                          v => v ?? "[]",                    // C# → DB
-                          v => v                             // DB → C#
+                          v => v ?? "[]",
+                          v => v
+                      );
+            });
+
+            // ✅ Booking Plan Mapping
+            modelBuilder.Entity<PlanBooking>(entity =>
+            {
+                entity.ToTable("tbl_plan_booking");
+
+                entity.Property(p => p.Images)
+                      .HasColumnName("images")
+                      .HasColumnType("jsonb")
+                      .HasConversion(
+                          v => v ?? "[]",
+                          v => v
+                      );
+
+                entity.Property(p => p.Features)
+                      .HasColumnName("features")
+                      .HasColumnType("jsonb")
+                      .HasConversion(
+                          v => v ?? "[]",
+                          v => v
+                      );
+
+                entity.Property(p => p.AvailableDays)
+                      .HasColumnName("available_days")
+                      .HasColumnType("jsonb")
+                      .HasConversion(
+                          v => v ?? "[]",
+                          v => v
                       );
             });
         }
