@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SpaceHive360.Admin.Domain.IRepositories;
@@ -21,11 +21,14 @@ namespace SpaceHive360.Admin.Infrastructure
                 options.UseNpgsql(postgresConnection)
             );
             services.AddScoped<IAdminUserRepository, AdminUserRepository>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IWorkspaceTypeRepository, WorkspaceTypeRepository>();
             services.AddScoped<IWorkspaceRepository, WorkspaceRepository>();
             services.AddScoped<IPlanRepository, PlanRepository>();
             services.AddScoped<IPaymentTermsRepository, PaymentTermsRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();
+            services.AddScoped<IPlanBookingRepository, PlanBookingRepository>();
+            services.AddScoped<IPlanMembershipRepository, PlanMembershipRepository>();
             services.AddScoped<ApplicationRepo.IFeedbackRepository, FeedbackRepository>();
 
             return services;
