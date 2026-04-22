@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,6 +18,9 @@ namespace SpaceHive360.Admin.Domain.Entities
         [Column("fk_workspace_type")]
         [Required]
         public Guid FkWorkspaceType { get; set; }
+
+        [Column("fk_location")]
+        public Guid? FkLocation { get; set; }
 
         [Column("created_by")]
         public Guid? CreatedBy { get; set; }

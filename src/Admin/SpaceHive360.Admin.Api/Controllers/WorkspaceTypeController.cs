@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using SpaceHive360.Admin.Application.DTOs;
 using SpaceHive360.Admin.Application.Services;
 using SpaceHive360.Admin.Application.Services.WorkspaceType;
@@ -61,7 +61,14 @@ namespace SpaceHive360.Admin.Api.Controllers
         {
             try
             {
-                var types = await _workspaceTypeService.GetAllWorkspaceTypesAsync();
+                var recIdClaim = User.Claims.FirstOrDefault(c => c.Type == "recId");
+
+                if (recIdClaim == null || !Guid.TryParse(recIdClaim.Value, out Guid userRecId))
+                {
+                    return Unauthorized(new { Message = "Invalid or missing user RecId claim." });
+                }
+
+                var types = await _workspaceTypeService.GetAllWorkspaceTypesAsync(userRecId);
                 return Ok(types);
             }
             catch (Exception ex)

@@ -79,7 +79,7 @@ namespace SpaceHive360.Admin.Application.Services.PlanMemberships
                     RequiresApproval = dto.RequiresApproval,
                     Images = JsonSerializer.Serialize(imageUrls),
                     Features = dto.Features != null ? JsonSerializer.Serialize(dto.Features) : "[]",
-                    PlanCategory = "membership",
+                    PlanCategory = dto.PlanCategory ?? "membership",
                     IsActive = true,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow

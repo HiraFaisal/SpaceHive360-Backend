@@ -1,4 +1,4 @@
-﻿using SpaceHive360.Admin.Domain.Entities;
+using SpaceHive360.Admin.Domain.Entities;
 using SpaceHive360.Admin.Domain.IRepositories;
 using static SpaceHive360.Admin.Application.DTOs.Workspace;
 
@@ -49,9 +49,9 @@ namespace SpaceHive360.Admin.Application.Services.WorkspaceType
             return await _repository.GetByIdAsync(id);
         }
 
-        public async Task<IEnumerable<Domain.Entities.WorkspaceType>> GetAllWorkspaceTypesAsync()
+        public async Task<IEnumerable<Domain.Entities.WorkspaceType>> GetAllWorkspaceTypesAsync(Guid userRecId)
         {
-            return await _repository.GetAllAsync();
+            return await _repository.GetAllAsync(userRecId);
         }
 
         public async Task<bool> UpdateWorkspaceTypeAsync(

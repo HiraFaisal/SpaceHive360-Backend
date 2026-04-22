@@ -15,6 +15,7 @@ namespace SpaceHive360.Admin.Application.DTOs
 
             public string Name { get; set; } = null!;
             public string? Description { get; set; }
+            public string? PlanCategory { get; set; }
 
             public string? DurationType { get; set; }
             public int? DurationValue { get; set; }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using SpaceHive360.Admin.Domain.Entities;
@@ -31,6 +31,7 @@ namespace SpaceHive360.Admin.Application.Services.Workspace
                     RecId = Guid.NewGuid(),
                     FkCompany = company.RecId,
                     FkWorkspaceType = request.FkWorkspaceType,
+                    FkLocation = request.FkLocation,
                     Name = request.Name,
                     Description = request.Description,
                     Capacity = request.Capacity,
