@@ -28,9 +28,11 @@ namespace SpaceHive360.Admin.Infrastructure.Repositories
             return await _context.Workspaces.FindAsync(id);
         }
 
-        public async Task<IEnumerable<Workspace>> GetAllWorkspaceAsync()
+        public async Task<IEnumerable<Workspace>> GetAllWorkspaceAsync(Guid companyId)
         {
-            return await _context.Workspaces.ToListAsync();
+            return await _context.Workspaces
+                .Where(w => w.FkCompany == companyId && w.IsActive)
+                .ToListAsync();
         }
 
         public Task UpdateAsync(Workspace entity)

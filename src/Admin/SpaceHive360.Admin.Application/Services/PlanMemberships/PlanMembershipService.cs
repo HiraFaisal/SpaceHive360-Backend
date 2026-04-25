@@ -23,11 +23,11 @@ namespace SpaceHive360.Admin.Application.Services.PlanMemberships
             _fileService = fileService;
         }
 
-        public async Task<ApiResponse> GetAllPlanMembershipsAsync(string? search, string? filter, string sortColumn, bool isAscending, int pageNumber, int pageSize)
+        public async Task<ApiResponse> GetAllPlanMembershipsAsync(Guid? companyId, string? search, string? filter, string sortColumn, bool isAscending, int pageNumber, int pageSize)
         {
             try
             {
-                var result = await _planMembershipRepository.GetAllAsync(search, filter, sortColumn, isAscending, pageNumber, pageSize);
+                var result = await _planMembershipRepository.GetAllAsync(companyId, search, filter, sortColumn, isAscending, pageNumber, pageSize);
                 var dtos = result.Select(MapToDto).ToList();
                 return ApiResponse.SuccessResponse(dtos, "Plan memberships fetched successfully");
             }
@@ -147,6 +147,26 @@ namespace SpaceHive360.Admin.Application.Services.PlanMemberships
             catch (Exception ex)
             {
                 return ApiResponse.ErrorResponse("Failed to delete plan membership", 500, new List<string> { ex.Message });
+            }
+        }
+
+        public async Task<ApiResponse> GetPlanMembershipStatsAsync(Guid? companyId)
+        {
+            try
+            {
+                var stats = await _planMembershipRepository.GetStatsAsync(companyId);
+                var dto = new PlanMembershipStatsDto
+                {
+                    TotalPlans = stats.TotalPlans,
+                    ActivePlans = stats.ActivePlans,
+                    AveragePrice = stats.AveragePrice,
+                    NewPlansThisMonth = stats.NewPlansThisMonth
+                };
+                return ApiResponse.SuccessResponse(dto, "Plan membership stats fetched successfully");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse.ErrorResponse("Failed to fetch plan membership stats", 500, new List<string> { ex.Message });
             }
         }
 

@@ -30,7 +30,11 @@ namespace SpaceHive360.Admin.Api.Controllers
         {
             try
             {
+                var companyIdClaim = User.FindFirst("companyId")?.Value;
+                Guid? companyId = !string.IsNullOrEmpty(companyIdClaim) ? Guid.Parse(companyIdClaim) : null;
+
                 var response = await _planMembershipService.GetAllPlanMembershipsAsync(
+                    companyId,
                     search, 
                     filter, 
                     sortColumn ?? "name", 
@@ -113,6 +117,27 @@ namespace SpaceHive360.Admin.Api.Controllers
             try
             {
                 var response = await _planMembershipService.DeletePlanMembershipAsync(id);
+
+                if (!response.Success)
+                    return BadRequest(response);
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = "Something went wrong", error = ex.Message });
+            }
+        }
+
+        [HttpGet("stats")]
+        public async Task<IActionResult> GetStats()
+        {
+            try
+            {
+                var companyIdClaim = User.FindFirst("companyId")?.Value;
+                Guid? companyId = !string.IsNullOrEmpty(companyIdClaim) ? Guid.Parse(companyIdClaim) : null;
+
+                var response = await _planMembershipService.GetPlanMembershipStatsAsync(companyId);
 
                 if (!response.Success)
                     return BadRequest(response);

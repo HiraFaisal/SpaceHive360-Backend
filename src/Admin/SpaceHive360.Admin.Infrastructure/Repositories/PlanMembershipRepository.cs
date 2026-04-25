@@ -6,6 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
+using System.Data;
+using SpaceHive360.Admin.Domain.Models;
 
 namespace SpaceHive360.Admin.Infrastructure.Repositories
 {
@@ -19,6 +22,7 @@ namespace SpaceHive360.Admin.Infrastructure.Repositories
         }
 
         public async Task<List<PlanMembership>> GetAllAsync(
+            Guid? companyId,
             string? search,
             string? filter,
             string sortColumn,
@@ -28,35 +32,27 @@ namespace SpaceHive360.Admin.Infrastructure.Repositories
         {
             try
             {
-                var query = _context.PlanMemberships.Where(pm => pm.IsActive).AsQueryable();
-
-                if (!string.IsNullOrWhiteSpace(search))
+                using (var connection = _context.Database.GetDbConnection())
                 {
-                    query = query.Where(pm => pm.Name != null && pm.Name.ToLower().Contains(search.ToLower()));
-                }
+                    var result = await connection.QueryAsync<PlanMembership>(
+                        "SELECT * FROM sp_get_plan_memberships(@CompanyId, @Search, @SortColumn, @IsAscending, @PageNumber, @PageSize)",
+                        new
+                        {
+                            CompanyId = companyId,
+                            Search = search,
+                            SortColumn = sortColumn,
+                            IsAscending = isAscending,
+                            PageNumber = pageNumber,
+                            PageSize = pageSize
+                        }
+                    );
 
-                // Simple ordering
-                if (!string.IsNullOrWhiteSpace(sortColumn))
-                {
-                    if (sortColumn.Equals("name", StringComparison.OrdinalIgnoreCase))
-                        query = isAscending ? query.OrderBy(pm => pm.Name) : query.OrderByDescending(pm => pm.Name);
-                    else if (sortColumn.Equals("price", StringComparison.OrdinalIgnoreCase))
-                        query = isAscending ? query.OrderBy(pm => pm.Price) : query.OrderByDescending(pm => pm.Price);
-                    else
-                        query = isAscending ? query.OrderBy(pm => pm.CreatedAt) : query.OrderByDescending(pm => pm.CreatedAt);
+                    return result.ToList();
                 }
-                else
-                {
-                    query = query.OrderByDescending(pm => pm.CreatedAt);
-                }
-
-                // Pagination
-                int skip = (pageNumber - 1) * pageSize;
-                return await query.Skip(skip).Take(pageSize).ToListAsync();
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error fetching plan memberships: {ex.Message}", ex);
+                throw new Exception($"Error fetching plan memberships from SP: {ex.Message}", ex);
             }
         }
 
@@ -117,6 +113,29 @@ namespace SpaceHive360.Admin.Infrastructure.Repositories
             catch (Exception ex)
             {
                 throw new Exception($"Error deleting plan membership: {ex.Message}", ex);
+            }
+        }
+        public async Task<PlanMembershipStats> GetStatsAsync(Guid? companyId)
+        {
+            try
+            {
+                using (var connection = _context.Database.GetDbConnection())
+                {
+                    const string sql = @"
+                        SELECT 
+                            COUNT(*) AS TotalPlans,
+                            COUNT(*) FILTER (WHERE isactive = true) AS ActivePlans,
+                            COALESCE(AVG(price) FILTER (WHERE isactive = true), 0) AS AveragePrice,
+                            COUNT(*) FILTER (WHERE created_at >= date_trunc('month', CURRENT_DATE)) AS NewPlansThisMonth
+                        FROM tbl_plan_membership
+                        WHERE (@CompanyId IS NULL OR fk_company = @CompanyId)";
+
+                    return await connection.QuerySingleAsync<PlanMembershipStats>(sql, new { CompanyId = companyId });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error fetching plan membership stats: {ex.Message}", ex);
             }
         }
     }

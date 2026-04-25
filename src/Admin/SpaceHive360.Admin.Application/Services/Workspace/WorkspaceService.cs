@@ -59,9 +59,13 @@ namespace SpaceHive360.Admin.Application.Services.Workspace
             return await _repository.GetByIdAsync(id);
         }
 
-        public async Task<IEnumerable<Domain.Entities.Workspace>> GetAllWorkspacesAsync()
+        public async Task<IEnumerable<Domain.Entities.Workspace>> GetAllWorkspacesAsync(Guid userRecId)
         {
-            return await _repository.GetAllWorkspaceAsync();
+            var company = _repository.GetCompanyDetailsByUserRecId(userRecId);
+            if (company == null)
+                throw new InvalidOperationException("Company for the provided user was not found.");
+
+            return await _repository.GetAllWorkspaceAsync(company.RecId);
         }
 
         public async Task<bool> DeleteWorkspaceAsync(Guid id)

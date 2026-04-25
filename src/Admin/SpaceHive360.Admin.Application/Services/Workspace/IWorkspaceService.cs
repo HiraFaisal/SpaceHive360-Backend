@@ -9,7 +9,7 @@ namespace SpaceHive360.Admin.Application.Services.Workspace
     {
         Task<Guid> CreateWorkspaceAsync(WorkspaceRequest request, Guid userRecId);
         Task<Domain.Entities.Workspace?> GetWorkspaceByIdAsync(Guid id);
-        Task<IEnumerable<Domain.Entities.Workspace>> GetAllWorkspacesAsync();
+        Task<IEnumerable<Domain.Entities.Workspace>> GetAllWorkspacesAsync(Guid userRecId);
         Task<bool> DeleteWorkspaceAsync(Guid id);
     }
 }

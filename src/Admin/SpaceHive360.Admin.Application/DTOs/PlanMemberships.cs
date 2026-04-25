@@ -66,5 +66,12 @@ namespace SpaceHive360.Admin.Application.DTOs
             public DateTime CreatedAt { get; set; }
             public DateTime UpdatedAt { get; set; }
         }
+        public class PlanMembershipStatsDto
+        {
+            public int TotalPlans { get; set; }
+            public int ActivePlans { get; set; }
+            public decimal AveragePrice { get; set; }
+            public int NewPlansThisMonth { get; set; }
+        }
     }
 }

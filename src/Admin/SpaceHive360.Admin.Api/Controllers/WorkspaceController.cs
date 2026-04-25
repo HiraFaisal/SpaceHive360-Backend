@@ -55,7 +55,14 @@ namespace SpaceHive360.Admin.Api.Controllers
         {
             try
             {
-                var workspaces = await _workspaceService.GetAllWorkspacesAsync();
+                var recIdClaim = User.Claims.FirstOrDefault(c => c.Type == "recId");
+
+                if (recIdClaim == null || !Guid.TryParse(recIdClaim.Value, out Guid userRecId))
+                {
+                    return Unauthorized(new { Message = "Invalid or missing user RecId claim." });
+                }
+
+                var workspaces = await _workspaceService.GetAllWorkspacesAsync(userRecId);
                 return Ok(workspaces);
             }
             catch (Exception ex)
