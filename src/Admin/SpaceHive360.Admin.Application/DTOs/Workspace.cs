@@ -46,5 +46,13 @@ namespace SpaceHive360.Admin.Application.DTOs
             public Guid RecId { get; set; }
             public WorkspaceRequest Workspace { get; set; }
         }
+
+        public class WorkspaceStatsResponse
+        {
+            public int TotalWorkspaces { get; set; }
+            public int ActiveWorkspaces { get; set; }
+            public int AvailableWorkspaces { get; set; }
+            public int OccupiedWorkspaces { get; set; }
+        }
     }
 }
