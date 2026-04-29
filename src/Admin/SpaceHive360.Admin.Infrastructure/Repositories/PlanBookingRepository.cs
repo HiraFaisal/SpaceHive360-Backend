@@ -19,6 +19,7 @@ namespace SpaceHive360.Admin.Infrastructure.Repositories
         }
 
         public async Task<List<PlanBooking>> GetAllAsync(
+            Guid companyId,
             string? search,
             string? filter,
             string sortColumn,
@@ -28,7 +29,7 @@ namespace SpaceHive360.Admin.Infrastructure.Repositories
         {
             try
             {
-                var query = _context.PlanBookings.Where(pb => pb.IsActive).AsQueryable();
+                var query = _context.PlanBookings.Where(pb => pb.FkCompany == companyId && pb.IsActive).AsQueryable();
 
                 if (!string.IsNullOrWhiteSpace(search))
                 {
@@ -60,11 +61,11 @@ namespace SpaceHive360.Admin.Infrastructure.Repositories
             }
         }
 
-        public async Task<PlanBooking?> GetByIdAsync(Guid id)
+        public async Task<PlanBooking?> GetByIdAsync(Guid id, Guid companyId)
         {
             try
             {
-                return await _context.PlanBookings.FirstOrDefaultAsync(p => p.RecId == id && p.IsActive);
+                return await _context.PlanBookings.FirstOrDefaultAsync(p => p.RecId == id && p.FkCompany == companyId && p.IsActive);
             }
             catch (Exception ex)
             {
@@ -102,11 +103,11 @@ namespace SpaceHive360.Admin.Infrastructure.Repositories
             }
         }
 
-        public async Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id, Guid companyId)
         {
             try
             {
-                var planBooking = await _context.PlanBookings.FirstOrDefaultAsync(p => p.RecId == id);
+                var planBooking = await _context.PlanBookings.FirstOrDefaultAsync(p => p.RecId == id && p.FkCompany == companyId);
                 if (planBooking == null) return false;
 
                 planBooking.IsActive = false;
@@ -118,6 +119,39 @@ namespace SpaceHive360.Admin.Infrastructure.Repositories
             {
                 throw new Exception($"Error deleting plan booking: {ex.Message}", ex);
             }
+        }
+
+        public async Task<object> GetStatsAsync(Guid companyId)
+        {
+            var query = _context.PlanBookings.Where(pb => pb.FkCompany == companyId);
+            
+            var totalPlans = await query.CountAsync();
+            var activePlans = await query.CountAsync(pb => pb.IsActive);
+            
+            // Safe average calculation
+            double averagePrice = 0;
+            if (await query.AnyAsync(pb => pb.Price != null))
+            {
+                averagePrice = (double)await query.Where(pb => pb.Price != null).AverageAsync(pb => pb.Price ?? 0);
+            }
+            
+            var startOfMonth = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1);
+            var newPlansThisMonth = await query.CountAsync(pb => pb.CreatedAt >= startOfMonth);
+
+            return new
+            {
+                TotalPlans = totalPlans,
+                ActivePlans = activePlans,
+                AveragePrice = averagePrice,
+                NewPlansThisMonth = newPlansThisMonth
+            };
+        }
+
+        public Company? GetCompanyDetailsByUserRecId(Guid userRecId)
+        {
+            var user = _context.AdminUsers.FirstOrDefault(u => u.RecId == userRecId);
+            if (user == null) return null;
+            return _context.Companies.FirstOrDefault(c => c.RecId == user.FkCompany);
         }
     }
 }

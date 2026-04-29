@@ -9,10 +9,11 @@ namespace SpaceHive360.Admin.Application.Services.PlanBookings
 {
     public interface IPlanBookingService
     {
-        Task<ApiResponse> GetAllPlanBookingsAsync(string? search, string? filter, string sortColumn, bool isAscending, int pageNumber, int pageSize);
-        Task<ApiResponse> GetPlanBookingByIdAsync(Guid id);
-        Task<ApiResponse> CreatePlanBookingAsync(PlanBookingCreateDto dto, List<IFormFile>? images);
-        Task<ApiResponse> UpdatePlanBookingAsync(PlanBookingUpdateDto dto, List<IFormFile>? newImages);
-        Task<ApiResponse> DeletePlanBookingAsync(Guid id);
+        Task<ApiResponse> GetAllPlanBookingsAsync(Guid userRecId, string? search, string? filter, string sortColumn, bool isAscending, int pageNumber, int pageSize);
+        Task<ApiResponse> GetPlanBookingByIdAsync(Guid id, Guid userRecId);
+        Task<ApiResponse> CreatePlanBookingAsync(Guid userRecId, PlanBookingCreateDto dto, List<IFormFile>? images);
+        Task<ApiResponse> UpdatePlanBookingAsync(Guid userRecId, PlanBookingUpdateDto dto, List<IFormFile>? newImages);
+        Task<ApiResponse> DeletePlanBookingAsync(Guid id, Guid userRecId);
+        Task<ApiResponse> GetPlanBookingStatsAsync(Guid userRecId);
     }
 }

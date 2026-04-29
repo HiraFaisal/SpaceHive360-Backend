@@ -23,11 +23,14 @@ namespace SpaceHive360.Admin.Application.Services.PlanBookings
             _fileService = fileService;
         }
 
-        public async Task<ApiResponse> GetAllPlanBookingsAsync(string? search, string? filter, string sortColumn, bool isAscending, int pageNumber, int pageSize)
+        public async Task<ApiResponse> GetAllPlanBookingsAsync(Guid userRecId, string? search, string? filter, string sortColumn, bool isAscending, int pageNumber, int pageSize)
         {
             try
             {
-                var result = await _planBookingRepository.GetAllAsync(search, filter, sortColumn, isAscending, pageNumber, pageSize);
+                var company = _planBookingRepository.GetCompanyDetailsByUserRecId(userRecId);
+                if (company == null) return ApiResponse.ErrorResponse("Company not found", 404);
+
+                var result = await _planBookingRepository.GetAllAsync(company.RecId, search, filter, sortColumn, isAscending, pageNumber, pageSize);
                 var dtos = result.Select(MapToDto).ToList();
                 return ApiResponse.SuccessResponse(dtos, "Plan bookings fetched successfully");
             }
@@ -37,11 +40,14 @@ namespace SpaceHive360.Admin.Application.Services.PlanBookings
             }
         }
 
-        public async Task<ApiResponse> GetPlanBookingByIdAsync(Guid id)
+        public async Task<ApiResponse> GetPlanBookingByIdAsync(Guid id, Guid userRecId)
         {
             try
             {
-                var planBooking = await _planBookingRepository.GetByIdAsync(id);
+                var company = _planBookingRepository.GetCompanyDetailsByUserRecId(userRecId);
+                if (company == null) return ApiResponse.ErrorResponse("Company not found", 404);
+
+                var planBooking = await _planBookingRepository.GetByIdAsync(id, company.RecId);
                 if (planBooking == null) return ApiResponse.ErrorResponse("Plan booking not found", 404);
 
                 return ApiResponse.SuccessResponse(MapToDto(planBooking), "Plan booking fetched successfully");
@@ -52,10 +58,13 @@ namespace SpaceHive360.Admin.Application.Services.PlanBookings
             }
         }
 
-        public async Task<ApiResponse> CreatePlanBookingAsync(PlanBookingCreateDto dto, List<IFormFile>? images)
+        public async Task<ApiResponse> CreatePlanBookingAsync(Guid userRecId, PlanBookingCreateDto dto, List<IFormFile>? images)
         {
             try
             {
+                var company = _planBookingRepository.GetCompanyDetailsByUserRecId(userRecId);
+                if (company == null) return ApiResponse.ErrorResponse("Company not found", 404);
+
                 var imageUrls = new List<string>();
 
                 if (images != null && images.Count > 0)
@@ -64,7 +73,7 @@ namespace SpaceHive360.Admin.Application.Services.PlanBookings
                 var entity = new PlanBooking
                 {
                     RecId = Guid.NewGuid(),
-                    FkCompany = dto.FkCompany,
+                    FkCompany = company.RecId,
                     FkWorkspace = dto.FkWorkspace,
                     FkWorkspaceType = dto.FkWorkspaceType,
                     FkLocation = dto.FkLocation,
@@ -78,6 +87,7 @@ namespace SpaceHive360.Admin.Application.Services.PlanBookings
                     Price = dto.Price,
                     AllowCancellation = dto.AllowCancellation,
                     RequiresApproval = dto.RequiresApproval,
+                    IsVisible = dto.IsVisible,
                     Images = JsonSerializer.Serialize(imageUrls),
                     Features = dto.Features != null ? JsonSerializer.Serialize(dto.Features) : "[]",
                     AvailableDays = dto.AvailableDays != null ? JsonSerializer.Serialize(dto.AvailableDays) : "[]",
@@ -95,11 +105,14 @@ namespace SpaceHive360.Admin.Application.Services.PlanBookings
             }
         }
 
-        public async Task<ApiResponse> UpdatePlanBookingAsync(PlanBookingUpdateDto dto, List<IFormFile>? newImages)
+        public async Task<ApiResponse> UpdatePlanBookingAsync(Guid userRecId, PlanBookingUpdateDto dto, List<IFormFile>? newImages)
         {
             try
             {
-                var existing = await _planBookingRepository.GetByIdAsync(dto.RecId);
+                var company = _planBookingRepository.GetCompanyDetailsByUserRecId(userRecId);
+                if (company == null) return ApiResponse.ErrorResponse("Company not found", 404);
+
+                var existing = await _planBookingRepository.GetByIdAsync(dto.RecId, company.RecId);
                 if (existing == null) return ApiResponse.ErrorResponse("Plan booking not found", 404);
 
                 if (newImages != null && newImages.Count > 0)
@@ -111,7 +124,6 @@ namespace SpaceHive360.Admin.Application.Services.PlanBookings
                     existing.Images = JsonSerializer.Serialize(newUrls);
                 }
 
-                existing.FkCompany = dto.FkCompany ?? existing.FkCompany;
                 existing.FkWorkspace = dto.FkWorkspace;
                 existing.FkWorkspaceType = dto.FkWorkspaceType;
                 existing.FkLocation = dto.FkLocation;
@@ -125,6 +137,7 @@ namespace SpaceHive360.Admin.Application.Services.PlanBookings
                 existing.Price = dto.Price;
                 existing.AllowCancellation = dto.AllowCancellation;
                 existing.RequiresApproval = dto.RequiresApproval;
+                existing.IsVisible = dto.IsVisible;
                 existing.Features = dto.Features != null ? JsonSerializer.Serialize(dto.Features) : existing.Features;
                 existing.AvailableDays = dto.AvailableDays != null ? JsonSerializer.Serialize(dto.AvailableDays) : existing.AvailableDays;
                 existing.UpdatedAt = DateTime.UtcNow;
@@ -138,11 +151,14 @@ namespace SpaceHive360.Admin.Application.Services.PlanBookings
             }
         }
 
-        public async Task<ApiResponse> DeletePlanBookingAsync(Guid id)
+        public async Task<ApiResponse> DeletePlanBookingAsync(Guid id, Guid userRecId)
         {
             try
             {
-                var isDeleted = await _planBookingRepository.DeleteAsync(id);
+                var company = _planBookingRepository.GetCompanyDetailsByUserRecId(userRecId);
+                if (company == null) return ApiResponse.ErrorResponse("Company not found", 404);
+
+                var isDeleted = await _planBookingRepository.DeleteAsync(id, company.RecId);
                 if (!isDeleted) return ApiResponse.ErrorResponse("Plan booking not found", 404);
 
                 return ApiResponse.SuccessResponse(null, "Plan booking deleted successfully");
@@ -150,6 +166,22 @@ namespace SpaceHive360.Admin.Application.Services.PlanBookings
             catch (Exception ex)
             {
                 return ApiResponse.ErrorResponse("Failed to delete plan booking", 500, new List<string> { ex.Message });
+            }
+        }
+
+        public async Task<ApiResponse> GetPlanBookingStatsAsync(Guid userRecId)
+        {
+            try
+            {
+                var company = _planBookingRepository.GetCompanyDetailsByUserRecId(userRecId);
+                if (company == null) return ApiResponse.ErrorResponse("Company not found", 404);
+
+                var stats = await _planBookingRepository.GetStatsAsync(company.RecId);
+                return ApiResponse.SuccessResponse(stats, "Stats fetched successfully");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse.ErrorResponse("Failed to fetch stats", 500, new List<string> { ex.Message });
             }
         }
 
@@ -170,6 +202,7 @@ namespace SpaceHive360.Admin.Application.Services.PlanBookings
             Price = planBooking.Price,
             AllowCancellation = planBooking.AllowCancellation,
             RequiresApproval = planBooking.RequiresApproval,
+            IsVisible = planBooking.IsVisible,
             PlanCategory = planBooking.PlanCategory,
             IsActive = planBooking.IsActive,
             CreatedAt = planBooking.CreatedAt,

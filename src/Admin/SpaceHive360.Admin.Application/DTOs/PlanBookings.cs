@@ -28,6 +28,7 @@ namespace SpaceHive360.Admin.Application.DTOs
 
             public bool AllowCancellation { get; set; }
             public bool RequiresApproval { get; set; }
+            public bool IsVisible { get; set; } = true;
 
             public List<string>? Features { get; set; }
             public IFormFileCollection? Images { get; set; }
@@ -63,6 +64,7 @@ namespace SpaceHive360.Admin.Application.DTOs
 
             public bool AllowCancellation { get; set; }
             public bool RequiresApproval { get; set; }
+            public bool IsVisible { get; set; }
 
             public List<string>? Images { get; set; }
             public List<string>? Features { get; set; }
@@ -70,6 +72,14 @@ namespace SpaceHive360.Admin.Application.DTOs
             public bool IsActive { get; set; }
             public DateTime CreatedAt { get; set; }
             public DateTime UpdatedAt { get; set; }
+        }
+
+        public class PlanBookingStatsResponse
+        {
+            public int TotalPlans { get; set; }
+            public int ActivePlans { get; set; }
+            public decimal AveragePrice { get; set; }
+            public int NewPlansThisMonth { get; set; }
         }
     }
 }

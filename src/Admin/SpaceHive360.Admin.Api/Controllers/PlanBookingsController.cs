@@ -30,7 +30,10 @@ namespace SpaceHive360.Admin.Api.Controllers
         {
             try
             {
+                if (!TryGetUserId(out Guid userRecId)) return Unauthorized();
+
                 var response = await _planBookingService.GetAllPlanBookingsAsync(
+                    userRecId,
                     search, 
                     filter, 
                     sortColumn ?? "name", 
@@ -55,7 +58,9 @@ namespace SpaceHive360.Admin.Api.Controllers
         {
             try
             {
-                var response = await _planBookingService.GetPlanBookingByIdAsync(id);
+                if (!TryGetUserId(out Guid userRecId)) return Unauthorized();
+
+                var response = await _planBookingService.GetPlanBookingByIdAsync(id, userRecId);
 
                 if (!response.Success)
                     return BadRequest(response);
@@ -75,9 +80,10 @@ namespace SpaceHive360.Admin.Api.Controllers
             try
             {
                 if (model == null) return BadRequest("Invalid request");
+                if (!TryGetUserId(out Guid userRecId)) return Unauthorized();
 
                 var imageList = model.Images?.ToList() ?? new System.Collections.Generic.List<IFormFile>();
-                var response = await _planBookingService.CreatePlanBookingAsync(model, imageList);
+                var response = await _planBookingService.CreatePlanBookingAsync(userRecId, model, imageList);
 
                 return response.Success ? Ok(response) : BadRequest(response);
             }
@@ -94,10 +100,11 @@ namespace SpaceHive360.Admin.Api.Controllers
             try
             {
                 if (model == null) return BadRequest("Invalid request");
+                if (!TryGetUserId(out Guid userRecId)) return Unauthorized();
 
                 model.RecId = id;
                 var imageList = model.Images?.ToList() ?? new System.Collections.Generic.List<IFormFile>();
-                var response = await _planBookingService.UpdatePlanBookingAsync(model, imageList);
+                var response = await _planBookingService.UpdatePlanBookingAsync(userRecId, model, imageList);
 
                 return response.Success ? Ok(response) : BadRequest(response);
             }
@@ -112,7 +119,9 @@ namespace SpaceHive360.Admin.Api.Controllers
         {
             try
             {
-                var response = await _planBookingService.DeletePlanBookingAsync(id);
+                if (!TryGetUserId(out Guid userRecId)) return Unauthorized();
+
+                var response = await _planBookingService.DeletePlanBookingAsync(id, userRecId);
 
                 if (!response.Success)
                     return BadRequest(response);
@@ -123,6 +132,31 @@ namespace SpaceHive360.Admin.Api.Controllers
             {
                 return BadRequest(new { message = "Something went wrong", error = ex.Message });
             }
+        }
+
+        [HttpGet("stats")]
+        public async Task<IActionResult> GetStats()
+        {
+            try
+            {
+                if (!TryGetUserId(out Guid userRecId)) return Unauthorized();
+
+                var response = await _planBookingService.GetPlanBookingStatsAsync(userRecId);
+                return response.Success ? Ok(response) : BadRequest(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = "Something went wrong", error = ex.Message });
+            }
+        }
+
+        private bool TryGetUserId(out Guid userId)
+        {
+            userId = Guid.Empty;
+            var claim = User.Claims.FirstOrDefault(c => c.Type.Equals("recId", StringComparison.OrdinalIgnoreCase));
+            if (claim == null || !Guid.TryParse(claim.Value, out userId))
+                return false;
+            return true;
         }
     }
 }
