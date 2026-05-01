@@ -15,6 +15,7 @@ using SpaceHive360.Admin.Application.Services.Feedback;
 using SpaceHive360.Admin.Application.Services.PlanBookings;
 using SpaceHive360.Admin.Application.Services.PlanMemberships;
 using SpaceHive360.Admin.Application.Services.Companies;
+using SpaceHive360.Admin.Application.Services.Bookings;
 
 namespace SpaceHive360.Admin.Application
 {

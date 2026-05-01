@@ -30,6 +30,7 @@ namespace SpaceHive360.Admin.Infrastructure
             services.AddScoped<IPlanBookingRepository, PlanBookingRepository>();
             services.AddScoped<IPlanMembershipRepository, PlanMembershipRepository>();
             services.AddScoped<ApplicationRepo.IFeedbackRepository, FeedbackRepository>();
+            services.AddScoped<SpaceHive360.Admin.Application.Services.Bookings.IBookingService, SpaceHive360.Admin.Infrastructure.Services.Bookings.BookingService>();
 
             return services;
         }
