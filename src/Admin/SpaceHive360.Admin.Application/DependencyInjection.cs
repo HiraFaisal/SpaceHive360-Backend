@@ -36,6 +36,7 @@ namespace SpaceHive360.Admin.Application
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IPlanService, PlanService>();
             services.AddScoped<ILocationService, LocationService>();
+            services.AddScoped<SpaceHive360.Admin.Application.Services.Cities.ICityService, SpaceHive360.Admin.Application.Services.Cities.CityService>();
             services.AddScoped<IFeedbackService, FeedbackService>();
             services.AddScoped<IPlanBookingService, PlanBookingService>();
             services.AddScoped<IPlanMembershipService, PlanMembershipService>();

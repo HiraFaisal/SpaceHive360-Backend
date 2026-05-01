@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,10 +10,6 @@ namespace SpaceHive360.Admin.Domain.Entities
         [Key]
         [Column("rec_id")]
         public Guid RecId { get; set; } = Guid.NewGuid();
-
-        [Column("fk_company")]
-        [Required]
-        public Guid FkCompany { get; set; }
 
         [Column("name")]
         [Required]

@@ -27,6 +27,7 @@ namespace SpaceHive360.Admin.Infrastructure
             services.AddScoped<IPlanRepository, PlanRepository>();
             services.AddScoped<IPaymentTermsRepository, PaymentTermsRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();
+            services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<IPlanBookingRepository, PlanBookingRepository>();
             services.AddScoped<IPlanMembershipRepository, PlanMembershipRepository>();
             services.AddScoped<ApplicationRepo.IFeedbackRepository, FeedbackRepository>();
