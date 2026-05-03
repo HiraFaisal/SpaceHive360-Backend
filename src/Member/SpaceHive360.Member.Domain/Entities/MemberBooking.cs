@@ -41,7 +41,7 @@ namespace SpaceHive360.Member.Domain.Entities
         [Column("payment_id")]
         public string? PaymentId { get; set; }
 
-        [ForeignKey(nameof(FkMemberUser))]
-        public virtual MemberUser? MemberUser { get; set; }
+        [Column("fk_payment")]
+        public Guid? FkPayment { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using SpaceHive360.Admin.Application.DTOs;
+using SpaceHive360.Admin.Application.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,5 +10,6 @@ namespace SpaceHive360.Admin.Application.IRepositories
         Task<List<FeedbackDTO>> GetFeedbacksAsync(Guid? recId, Guid userRecId);
 
         Task<Guid> GetCompanyIdByUserRecIdAsync(Guid userRecId);
+        Task<List<FeedbackDTO>> GetFeedbacksByLocationAsync(Guid locationId);
     }
 }

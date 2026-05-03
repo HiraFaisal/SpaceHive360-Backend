@@ -16,6 +16,7 @@ using SpaceHive360.Admin.Application.Services.PlanBookings;
 using SpaceHive360.Admin.Application.Services.PlanMemberships;
 using SpaceHive360.Admin.Application.Services.Companies;
 using SpaceHive360.Admin.Application.Services.Bookings;
+using SpaceHive360.Admin.Application.Services.Ai;
 
 namespace SpaceHive360.Admin.Application
 {
@@ -41,6 +42,11 @@ namespace SpaceHive360.Admin.Application
             services.AddScoped<IPlanBookingService, PlanBookingService>();
             services.AddScoped<IPlanMembershipService, PlanMembershipService>();
             services.AddScoped<ICompanyService, CompanyService>();
+            
+            // ---------------------------
+            // AI Services
+            // ---------------------------
+            services.AddHttpClient<IAiService, AiService>();
             // ---------------------------
             // Configure JWT Settings
             // ---------------------------

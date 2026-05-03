@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -45,5 +45,17 @@ namespace SpaceHive360.Admin.Domain.Entities
 
         [Column("created_at")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        [Column("plan_booking_id")]
+        public Guid? PlanBookingId { get; set; }
+
+        [Column("plan_membership_id")]
+        public Guid? PlanMembershipId { get; set; }
+
+        [Column("sentiment")]
+        public string? Sentiment { get; set; }
+
+        [Column("sentiment_score")]
+        public double? SentimentScore { get; set; }
     }
 }

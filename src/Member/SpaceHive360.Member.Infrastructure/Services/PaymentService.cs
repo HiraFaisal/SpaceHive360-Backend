@@ -95,7 +95,9 @@ namespace SpaceHive360.Member.Infrastructure.Services
                     Metadata = new Dictionary<string, string>
                     {
                         { "booking_id", booking.RecId.ToString() },
-                        { "member_user_id", request.MemberUserId.ToString() }
+                        { "member_user_id", request.MemberUserId.ToString() },
+                        { "membership_id", request.MembershipId?.ToString() ?? "" },
+                        { "payment_id", request.PaymentId?.ToString() ?? "" }
                     }
                 };
 
@@ -140,6 +142,44 @@ namespace SpaceHive360.Member.Infrastructure.Services
                                 booking.PaymentStatus = "Completed";
                                 booking.BookingStatus = "Confirmed";
                                 booking.PaymentId = session.PaymentIntentId; // Store actual payment intent
+                                await _context.SaveChangesAsync();
+                            }
+                        }
+
+                        var paymentIdStr = session.Metadata["payment_id"];
+                        if (!string.IsNullOrEmpty(paymentIdStr) && Guid.TryParse(paymentIdStr, out Guid paymentId))
+                        {
+                            var payment = await _context.MemberPayments.FindAsync(paymentId);
+                            if (payment != null)
+                            {
+                                payment.PaymentStatus = "Completed";
+                                payment.ApprovalStatus = "Approved";
+                                payment.TransactionId = session.PaymentIntentId;
+                                payment.UpdatedAt = DateTime.UtcNow;
+                                await _context.SaveChangesAsync();
+
+                                // Update all linked memberships (Decoupled update)
+                                var memberships = await _context.MemberMemberships
+                                    .Where(m => m.FkPayment == paymentId)
+                                    .ToListAsync();
+                                
+                                foreach (var m in memberships)
+                                {
+                                    m.MembershipStatus = "Active";
+                                }
+
+                                // Update all linked bookings (if any link back to this payment)
+                                var bookings = await _context.MemberBookings
+                                    .Where(b => b.FkPayment == paymentId)
+                                    .ToListAsync();
+
+                                foreach (var b in bookings)
+                                {
+                                    b.PaymentStatus = "Completed";
+                                    b.BookingStatus = "Confirmed";
+                                    b.PaymentId = session.PaymentIntentId;
+                                }
+
                                 await _context.SaveChangesAsync();
                             }
                         }

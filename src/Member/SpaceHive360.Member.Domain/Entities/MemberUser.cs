@@ -26,6 +26,9 @@ namespace SpaceHive360.Member.Domain.Entities
         [Column("is_active")]
         public bool IsActive { get; set; } = true;
 
+        [Column("is_onboarding_completed")]
+        public bool IsOnboardingCompleted { get; set; } = false;
+
         [Column("created_at")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }

@@ -34,7 +34,8 @@ namespace SpaceHive360.Member.Infrastructure.Services
                 FullName = user.FullName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-                Token = "mock-jwt-token-" + Guid.NewGuid().ToString() // Replace with real JWT later
+                IsOnboardingCompleted = user.IsOnboardingCompleted,
+                Token = $"{user.RecId}:mock-jwt-token-{Guid.NewGuid()}" // Include userId in token for identification
             });
         }
 
@@ -62,7 +63,8 @@ namespace SpaceHive360.Member.Infrastructure.Services
                 FullName = user.FullName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-                Token = "mock-jwt-token-" + Guid.NewGuid().ToString()
+                IsOnboardingCompleted = user.IsOnboardingCompleted,
+                Token = $"{user.RecId}:mock-jwt-token-{Guid.NewGuid()}"
             });
         }
 

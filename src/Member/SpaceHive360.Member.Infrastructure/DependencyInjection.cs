@@ -22,6 +22,13 @@ namespace SpaceHive360.Member.Infrastructure
             services.AddScoped<IMemberPortalService, MemberPortalService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IFeedbackService, FeedbackService>();
+            services.AddScoped<IUserPreferenceService, UserPreferenceService>();
+            services.AddScoped<IUserActivityService, UserActivityService>();
+            services.AddScoped<IMembershipService, MembershipService>();
+            services.AddScoped<IFileService, FileService>();
+
+            services.AddHttpClient<Application.Services.Ai.IAiService, Services.Ai.AiService>();
 
             return services;
         }

@@ -23,5 +23,6 @@ namespace SpaceHive360.Member.Application.Models
         public string Email { get; set; } = string.Empty;
         public string? PhoneNumber { get; set; }
         public string Token { get; set; } = string.Empty;
+        public bool IsOnboardingCompleted { get; set; }
     }
 }
