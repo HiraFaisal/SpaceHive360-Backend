@@ -49,18 +49,20 @@ if (Directory.Exists(adminWwwRoot))
 }
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Enable Swagger in all environments
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "SpaceHive360 Member API V1");
-        options.RoutePrefix = string.Empty;
-    });
-}
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "SpaceHive360 Member API V1");
+    options.RoutePrefix = string.Empty;
+});
 
 app.UseCors("AllowFrontend");
-app.UseHttpsRedirection();
+// Only use HTTPS redirect in production with proper SSL
+if (!app.Environment.IsProduction())
+{
+    app.UseHttpsRedirection();
+}
 app.UseAuthorization();
 app.MapControllers();
 

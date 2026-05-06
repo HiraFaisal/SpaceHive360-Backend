@@ -94,18 +94,20 @@ builder.Services.AddSuperAdminApplicationDI(builder.Configuration);
 var app = builder.Build();
 
 // ===== 5. Middleware =====
-if (app.Environment.IsDevelopment())
+// Enable Swagger in all environments
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "SpaceHive360 SuperAdmin API V1");
-        options.RoutePrefix = string.Empty;
-    });
-}
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "SpaceHive360 SuperAdmin API V1");
+    options.RoutePrefix = string.Empty;
+});
 
 app.UseCors("AllowFrontend");
-app.UseHttpsRedirection();
+// Only use HTTPS redirect in production with proper SSL
+if (!app.Environment.IsProduction())
+{
+    app.UseHttpsRedirection();
+}
 app.UseAuthentication();
 app.UseAuthorization();
 
