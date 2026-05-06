@@ -56,10 +56,11 @@ namespace SpaceHive360.Admin.Application.Services.Feedback
                 var comments = feedbacks
                     .Where(f => !string.IsNullOrEmpty(f.Comments))
                     .Select(f => f.Comments)
-                    .Take(10) // Limit for summarization performance
+                    .Take(10)
                     .ToList();
 
-                var aiSummary = await _aiService.SummarizeFeedbackAsync(comments);
+                // AI summarization is now handled on the frontend
+                var aiSummary = "Select 'AI Review Summarizer' to generate a fresh summary.";
 
                 return new LocationSentimentSummaryDTO
                 {

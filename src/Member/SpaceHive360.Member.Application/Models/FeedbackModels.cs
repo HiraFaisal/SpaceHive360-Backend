@@ -11,6 +11,8 @@ namespace SpaceHive360.Member.Application.Models
         public string? Comment { get; set; }
         public string? UserId { get; set; }
         public Guid? CompanyId { get; set; }
+        public string? Sentiment { get; set; }
+        public float? SentimentScore { get; set; }
     }
 
     public class FeedbackDTO
