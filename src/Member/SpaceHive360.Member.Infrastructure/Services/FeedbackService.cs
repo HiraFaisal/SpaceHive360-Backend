@@ -51,8 +51,9 @@ namespace SpaceHive360.Member.Infrastructure.Services
                 var user = await _context.MemberUsers
                     .FirstOrDefaultAsync(u => u.RecId.ToString() == request.UserId);
 
-                // Call AI Sentiment Analysis
-                var (sentiment, score) = await _aiService.AnalyzeSentimentAsync(request.Comment ?? "");
+                // Sentiment analysis is now handled on the frontend
+                var sentiment = request.Sentiment ?? "neutral";
+                var score = request.SentimentScore ?? 0.5f;
 
                 var feedback = new Feedback
                 {
