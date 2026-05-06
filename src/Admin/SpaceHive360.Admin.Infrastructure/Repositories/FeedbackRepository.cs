@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using Microsoft.AspNetCore.Connections;
 using Microsoft.EntityFrameworkCore;
 using SpaceHive360.Admin.Application.DTOs;
@@ -29,29 +29,6 @@ namespace SpaceHive360.Admin.Infrastructure.Repositories
                 .Select(u => u.FkCompany)
                 .FirstOrDefaultAsync();
         }
-
-        //// 🔹 GET ALL (SaaS FILTERED)
-        //public async Task<List<Feedback>> GetAllAsync(Guid userRecId)
-        //{
-        //    var companyId = await GetCompanyIdByUserRecIdAsync(userRecId);
-
-        //    return await _context.Feedbacks
-        //        .Where(x => x.FkCompany == companyId && x.IsActive)
-        //        .OrderByDescending(x => x.CreatedAt)
-        //        .ToListAsync();
-        //}
-
-        //// 🔹 GET BY ID (SaaS SAFE)
-        //public async Task<Feedback?> GetByIdAsync(Guid id, Guid userRecId)
-        //{
-        //    var companyId = await GetCompanyIdByUserRecIdAsync(userRecId);
-
-        //    return await _context.Feedbacks
-        //        .FirstOrDefaultAsync(x =>
-        //            x.RecId == id &&
-        //            x.FkCompany == companyId &&
-        //            x.IsActive);
-        //}
 
         public async Task<List<FeedbackDTO>> GetFeedbacksAsync(Guid? recId, Guid userRecId)
         {
@@ -87,7 +64,9 @@ namespace SpaceHive360.Admin.Infrastructure.Repositories
                             Comments = row.comments,
                             Rating = row.rating,
                             IsActive = row.is_active,
-                            CreatedAt = row.created_at
+                            CreatedAt = row.created_at,
+                            Sentiment = row.sentiment,
+                            SentimentScore = row.sentiment_score
                         });
                     }
 
@@ -98,6 +77,25 @@ namespace SpaceHive360.Admin.Infrastructure.Repositories
             {
                 throw new Exception($"Error fetching feedbacks: {ex.Message}", ex);
             }
+        }
+
+        public async Task<List<FeedbackDTO>> GetFeedbacksByLocationAsync(Guid locationId)
+        {
+            return await _context.Feedbacks
+                .Where(f => f.FkLocation == locationId && f.IsActive)
+                .Select(f => new FeedbackDTO
+                {
+                    RecId = f.RecId,
+                    FkLocation = f.FkLocation,
+                    Comments = f.Comments,
+                    Rating = f.Rating,
+                    Sentiment = f.Sentiment,
+                    SentimentScore = f.SentimentScore,
+                    CreatedAt = f.CreatedAt,
+                    MemberName = f.MemberName,
+                    MemberEmail = f.MemberEmail
+                })
+                .ToListAsync();
         }
     }
 }

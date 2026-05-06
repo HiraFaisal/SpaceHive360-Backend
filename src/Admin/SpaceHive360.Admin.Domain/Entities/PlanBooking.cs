@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -80,5 +80,11 @@ namespace SpaceHive360.Admin.Domain.Entities
 
         [Column("updated_at")]
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+
+        [Column("is_active")]
+        public bool IsActive { get; set; } = true;
+
+        [Column("is_visible")]
+        public bool IsVisible { get; set; } = true;
     }
 }

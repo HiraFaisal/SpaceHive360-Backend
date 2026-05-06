@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SpaceHive360.Admin.Domain.Entities;
 using System;
@@ -27,6 +27,7 @@ namespace SpaceHive360.Admin.Application.Security.JwtToken
                 new Claim("recId", user.RecId.ToString()),
                 new Claim("firstName", user.FirstName),
                 new Claim("lastName", user.LastName),
+                new Claim("companyId", user.FkCompany.ToString()),
                 new Claim("isActive", user.IsActive.ToString())
             };
 

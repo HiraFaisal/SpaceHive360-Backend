@@ -1,4 +1,4 @@
-﻿using SpaceHive360.Admin.Domain.Entities;
+using SpaceHive360.Admin.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,7 +9,7 @@ namespace SpaceHive360.Admin.Domain.IRepositories
     {
         Task AddAsync(WorkspaceType entity);
         Task<WorkspaceType?> GetByIdAsync(Guid id);
-        Task<IEnumerable<WorkspaceType>> GetAllAsync();
+        Task<IEnumerable<WorkspaceType>> GetAllAsync(Guid userRecId);
         Task UpdateAsync(WorkspaceType entity);
         Task SaveChangesAsync();
 

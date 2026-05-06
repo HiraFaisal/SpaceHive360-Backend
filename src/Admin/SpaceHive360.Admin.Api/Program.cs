@@ -8,6 +8,7 @@ using SpaceHive360.Admin.Infrastructure;
 using System.Text;
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 
 var builder = WebApplication.CreateBuilder(args);
 

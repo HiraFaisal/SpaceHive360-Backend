@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -26,5 +26,8 @@ namespace SpaceHive360.Admin.Application.DTOs
         public bool IsActive { get; set; }
 
         public DateTime CreatedAt { get; set; }
+
+        public string? Sentiment { get; set; }
+        public double? SentimentScore { get; set; }
     }
 }

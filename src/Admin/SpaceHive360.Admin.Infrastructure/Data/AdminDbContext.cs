@@ -1,4 +1,4 @@
-﻿using SpaceHive360.Admin.Domain.Entities;
+using SpaceHive360.Admin.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -28,6 +28,9 @@ namespace SpaceHive360.Admin.Infrastructure.Data
 
         public DbSet<PlanMembership> PlanMemberships { get; set; }
         public DbSet<PlanBooking> PlanBookings { get; set; }
+        public DbSet<MemberUser> MemberUsers { get; set; }
+        public DbSet<MemberBooking> MemberBookings { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AdminUser>().ToTable("tbl_admin_user");
@@ -37,8 +40,9 @@ namespace SpaceHive360.Admin.Infrastructure.Data
             modelBuilder.Entity<PaymentTerms>().ToTable("tbl_payment_terms");
             modelBuilder.Entity<City>().ToTable("tbl_city");
             modelBuilder.Entity<Location>().ToTable("tbl_location");
-            //modelBuilder.Entity<PaymentTerm>().ToTable("tbl_payment_terms");
             modelBuilder.Entity<Feedback>().ToTable("tbl_feedback");
+            modelBuilder.Entity<MemberUser>().ToTable("tbl_member_user");
+            modelBuilder.Entity<MemberBooking>().ToTable("tbl_member_bookings");
             // ✅ Membership Plan Mapping
             modelBuilder.Entity<PlanMembership>(entity =>
             {

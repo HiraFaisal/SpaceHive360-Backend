@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SpaceHive360.Admin.Domain.Entities;
 using SpaceHive360.Admin.Domain.IRepositories;
 using SpaceHive360.Admin.Infrastructure.Data;
@@ -30,11 +30,14 @@ namespace SpaceHive360.Admin.Infrastructure.Repositories
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task<IEnumerable<WorkspaceType>> GetAllAsync()
+        public async Task<IEnumerable<WorkspaceType>> GetAllAsync(Guid userRecId)
         {
+            var company = GetCompanyDetailsByUserRecId(userRecId);
+            if (company == null) return Enumerable.Empty<WorkspaceType>();
+
             return await _dbSet
-        .Where(x => x.IsActive)
-        .ToListAsync();
+                .Where(x => x.IsActive && (x.FkCompany == company.RecId || x.FkCompany == null))
+                .ToListAsync();
         }
 
         public Task UpdateAsync(WorkspaceType entity)

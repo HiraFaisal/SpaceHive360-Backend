@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace SpaceHive360.Admin.Application.Models
@@ -11,7 +11,7 @@ namespace SpaceHive360.Admin.Application.Models
         public List<string>? Errors { get; set; }
         public int StatusCode { get; set; }
 
-        public static ApiResponse SuccessResponse(object data, string message = "Success")
+        public static ApiResponse SuccessResponse(object? data, string message = "Success")
         {
             return new ApiResponse
             {

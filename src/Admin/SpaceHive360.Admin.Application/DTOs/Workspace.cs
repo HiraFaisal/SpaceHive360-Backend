@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace SpaceHive360.Admin.Application.DTOs
@@ -35,6 +35,7 @@ namespace SpaceHive360.Admin.Application.DTOs
             public int? Capacity { get; set; }
 
             public Guid FkWorkspaceType { get; set; }
+            public Guid? FkLocation { get; set; }
 
             public bool IsActive { get; set; } = true;
             public bool IsAvailable { get; set; } = true;
@@ -44,6 +45,14 @@ namespace SpaceHive360.Admin.Application.DTOs
             [Required]
             public Guid RecId { get; set; }
             public WorkspaceRequest Workspace { get; set; }
+        }
+
+        public class WorkspaceStatsResponse
+        {
+            public int TotalWorkspaces { get; set; }
+            public int ActiveWorkspaces { get; set; }
+            public int AvailableWorkspaces { get; set; }
+            public int OccupiedWorkspaces { get; set; }
         }
     }
 }

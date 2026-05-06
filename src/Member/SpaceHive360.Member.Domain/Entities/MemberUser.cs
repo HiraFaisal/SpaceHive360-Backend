@@ -1,0 +1,35 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SpaceHive360.Member.Domain.Entities
+{
+    [Table("tbl_member_user")]
+    public class MemberUser
+    {
+        [Key]
+        [Column("rec_id")]
+        public Guid RecId { get; set; } = Guid.NewGuid();
+
+        [Column("full_name")]
+        public string FullName { get; set; } = string.Empty;
+
+        [Column("email")]
+        public string Email { get; set; } = string.Empty;
+
+        [Column("password_hash")]
+        public string PasswordHash { get; set; } = string.Empty;
+
+        [Column("phone_number")]
+        public string? PhoneNumber { get; set; }
+
+        [Column("is_active")]
+        public bool IsActive { get; set; } = true;
+
+        [Column("is_onboarding_completed")]
+        public bool IsOnboardingCompleted { get; set; } = false;
+
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    }
+}

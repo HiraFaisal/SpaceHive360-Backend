@@ -9,7 +9,7 @@ namespace SpaceHive360.Admin.Domain.IRepositories
     {
         Task AddAsync(Workspace entity);
         Task<Workspace?> GetByIdAsync(Guid id);
-        Task<IEnumerable<Workspace>> GetAllWorkspaceAsync();
+        Task<IEnumerable<Workspace>> GetAllWorkspaceAsync(Guid companyId);
         Task UpdateAsync(Workspace entity);
         Task SaveChangesAsync();
 
