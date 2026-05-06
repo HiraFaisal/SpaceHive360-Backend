@@ -53,6 +53,9 @@ namespace SpaceHive360.Member.Domain.Entities
         [Column("isactive")]
         public bool IsActive { get; set; } = true;
 
+        [Column("max_slots")]
+        public int MaxSlots { get; set; } = 0;
+
         [Column("created_at")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }

@@ -1,4 +1,4 @@
-﻿using SpaceHive360.Admin.Application.Security;
+using SpaceHive360.Admin.Application.Security;
 using SpaceHive360.Admin.Domain.Entities;
 using SpaceHive360.Admin.Domain.IRepositories;
 using System;
@@ -35,6 +35,11 @@ namespace SpaceHive360.Admin.Application.Services.AdminUsers
             var isValid = _passwordService.Verify(user.Password, password);
 
             return isValid;
+        }
+
+        public async Task<AdminUser?> GetUserByIdAsync(Guid id)
+        {
+            return await _repo.GetByIdAsync(id);
         }
 
     }

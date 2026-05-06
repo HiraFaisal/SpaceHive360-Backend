@@ -32,23 +32,21 @@ namespace SpaceHive360.Admin.Infrastructure.Repositories
         {
             try
             {
-                using (var connection = _context.Database.GetDbConnection())
-                {
-                    var result = await connection.QueryAsync<PlanMembership>(
-                        "SELECT * FROM sp_get_plan_memberships(@CompanyId, @Search, @SortColumn, @IsAscending, @PageNumber, @PageSize)",
-                        new
-                        {
-                            CompanyId = companyId,
-                            Search = search,
-                            SortColumn = sortColumn,
-                            IsAscending = isAscending,
-                            PageNumber = pageNumber,
-                            PageSize = pageSize
-                        }
-                    );
+                var connection = _context.Database.GetDbConnection();
+                var result = await connection.QueryAsync<PlanMembership>(
+                    "SELECT * FROM sp_get_plan_memberships(@CompanyId, @Search, @SortColumn, @IsAscending, @PageNumber, @PageSize)",
+                    new
+                    {
+                        CompanyId = companyId,
+                        Search = search,
+                        SortColumn = sortColumn,
+                        IsAscending = isAscending,
+                        PageNumber = pageNumber,
+                        PageSize = pageSize
+                    }
+                );
 
-                    return result.ToList();
-                }
+                return result.ToList();
             }
             catch (Exception ex)
             {

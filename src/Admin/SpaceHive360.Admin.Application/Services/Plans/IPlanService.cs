@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using SpaceHive360.Admin.Application.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +11,7 @@ namespace SpaceHive360.Admin.Application.Services.Plans
     public interface IPlanService
     {
         Task<ApiResponse> GetAllPlansAsync(string? search, string? filter, string sortColumn, bool isAscending, int pageNumber, int pageSize);
+        Task<ApiResponse> GetPlansByCompanyAsync(Guid companyId);
         Task<ApiResponse> GetPlanByIdAsync(Guid id);
         Task<ApiResponse> CreatePlanAsync(PlanCreateDto dto, List<IFormFile>? images);
         Task<ApiResponse> UpdatePlanAsync(PlanUpdateDto dto, List<IFormFile>? newImages);

@@ -30,6 +30,9 @@ namespace SpaceHive360.Admin.Infrastructure.Data
         public DbSet<PlanBooking> PlanBookings { get; set; }
         public DbSet<MemberUser> MemberUsers { get; set; }
         public DbSet<MemberBooking> MemberBookings { get; set; }
+        public DbSet<MemberBookingDetail> BookingDetails { get; set; }
+        public DbSet<MemberMembership> MemberMemberships { get; set; }
+        public DbSet<MemberPayment> MemberPayments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,6 +46,8 @@ namespace SpaceHive360.Admin.Infrastructure.Data
             modelBuilder.Entity<Feedback>().ToTable("tbl_feedback");
             modelBuilder.Entity<MemberUser>().ToTable("tbl_member_user");
             modelBuilder.Entity<MemberBooking>().ToTable("tbl_member_bookings");
+            modelBuilder.Entity<MemberBookingDetail>().ToTable("tbl_member_booking_details");
+            modelBuilder.Entity<MemberMembership>().ToTable("tbl_member_memberships");
             // ✅ Membership Plan Mapping
             modelBuilder.Entity<PlanMembership>(entity =>
             {
