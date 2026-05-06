@@ -9,5 +9,6 @@ namespace SpaceHive360.Admin.Domain.IRepositories
     {
         Task AddAsync(AdminUser user);
         Task<AdminUser> GetByEmailAsync(string email);
+        Task<AdminUser?> GetByIdAsync(Guid id);
     }
 }

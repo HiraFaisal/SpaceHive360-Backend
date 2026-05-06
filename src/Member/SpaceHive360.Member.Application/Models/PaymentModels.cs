@@ -12,6 +12,7 @@ namespace SpaceHive360.Member.Application.Models
         public Guid? MembershipId { get; set; }
         public Guid? BookingId { get; set; }
         public Guid? PaymentId { get; set; }
+        public decimal? Amount { get; set; }
     }
 
     public class CheckoutSessionResponse

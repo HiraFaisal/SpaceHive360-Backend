@@ -27,6 +27,11 @@ namespace SpaceHive360.Admin.Infrastructure.Repositories
             return await _context.AdminUsers.FirstOrDefaultAsync(u => u.Email == email);
         }
 
+        public async Task<AdminUser?> GetByIdAsync(Guid id)
+        {
+            return await _context.AdminUsers.FirstOrDefaultAsync(u => u.RecId == id);
+        }
+
 
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using SpaceHive360.Admin.Domain.Entities;
@@ -9,5 +9,6 @@ namespace SpaceHive360.Admin.Application.Services.AdminUsers
     {
         Task CreateAsync(AdminUser user);
         Task<bool> LoginAsync(string email, string password);
+        Task<AdminUser?> GetUserByIdAsync(Guid id);
     }
 }

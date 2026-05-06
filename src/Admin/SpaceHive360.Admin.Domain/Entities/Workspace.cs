@@ -45,6 +45,12 @@ namespace SpaceHive360.Admin.Domain.Entities
         [Column("is_available")]
         public bool IsAvailable { get; set; } = true;
 
+        [Column("inventory_type")]
+        public string InventoryType { get; set; } = "UNIT";
+
+        [Column("max_units")]
+        public int MaxUnits { get; set; } = 1;
+
         [Column("created_at")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

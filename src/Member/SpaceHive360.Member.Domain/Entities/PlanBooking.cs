@@ -47,6 +47,15 @@ namespace SpaceHive360.Member.Domain.Entities
         [Column("available_days")]
         public string? AvailableDays { get; set; }
 
+        [Column("min_duration_minutes")]
+        public int? MinDurationMinutes { get; set; }
+
+        [Column("max_duration_minutes")]
+        public int? MaxDurationMinutes { get; set; }
+
+        [Column("price_type")]
+        public string? PricingType { get; set; }
+
         [Column("price")]
         public decimal? Price { get; set; }
 

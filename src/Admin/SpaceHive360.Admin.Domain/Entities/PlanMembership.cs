@@ -62,6 +62,9 @@ namespace SpaceHive360.Admin.Domain.Entities
         [Column("requires_approval")]
         public bool RequiresApproval { get; set; } = false;
 
+        [Column("max_slots")]
+        public int MaxSlots { get; set; } = 0;
+
         // 🏷️ Classification
         [Column("plan_category")]
         public string? PlanCategory { get; set; } = "membership";

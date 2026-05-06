@@ -7,5 +7,6 @@ namespace SpaceHive360.Member.Application.Services
     {
         Task<ApiResponse> CreateCheckoutSessionAsync(CreateCheckoutSessionRequest request);
         Task<ApiResponse> HandleWebhookAsync(string json, string stripeSignature);
+        Task<ApiResponse> VerifyPaymentAsync(string sessionId);
     }
 }

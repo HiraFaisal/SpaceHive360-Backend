@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SpaceHive360.Admin.Domain.Entities;
 using SpaceHive360.Admin.Domain.IRepositories;
 using SpaceHive360.Admin.Infrastructure.Data;
@@ -49,6 +49,21 @@ namespace SpaceHive360.Admin.Infrastructure.Repositories
             catch (Exception ex)
             {
                 throw new Exception($"Error fetching plans from function: {ex.Message}", ex);
+            }
+        }
+
+        public async Task<List<Plan>> GetByCompanyAsync(Guid companyId)
+        {
+            try
+            {
+                return await _context.Plans
+                    .Where(p => p.FkCompany == companyId && p.IsActive)
+                    .OrderByDescending(p => p.CreatedAt)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error fetching plans by company: {ex.Message}", ex);
             }
         }
 

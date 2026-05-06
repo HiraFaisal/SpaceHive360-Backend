@@ -33,5 +33,12 @@ namespace SpaceHive360.Member.Api.Controllers
             var response = await _paymentService.HandleWebhookAsync(json, stripeSignature);
             return response.Success ? Ok() : BadRequest(response);
         }
+
+        [HttpGet("verify/{sessionId}")]
+        public async Task<IActionResult> VerifyPayment(string sessionId)
+        {
+            var response = await _paymentService.VerifyPaymentAsync(sessionId);
+            return response.Success ? Ok(response) : BadRequest(response);
+        }
     }
 }

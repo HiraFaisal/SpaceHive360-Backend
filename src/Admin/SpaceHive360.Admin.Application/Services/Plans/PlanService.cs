@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using SpaceHive360.Admin.Application.Models;
 using SpaceHive360.Admin.Application.Services.Files;
 using SpaceHive360.Admin.Domain.Entities;
@@ -35,6 +35,19 @@ namespace SpaceHive360.Admin.Application.Services.Plans
             catch (Exception ex)
             {
                 return ApiResponse.ErrorResponse("Failed to fetch plans", 500, new List<string> { ex.Message });
+            }
+        }
+        public async Task<ApiResponse> GetPlansByCompanyAsync(Guid companyId)
+        {
+            try
+            {
+                var result = await _planRepository.GetByCompanyAsync(companyId);
+                var dtos = result.Select(MapToDto).ToList();
+                return ApiResponse.SuccessResponse(dtos, "Company plans fetched successfully");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse.ErrorResponse("Failed to fetch company plans", 500, new List<string> { ex.Message });
             }
         }
 
