@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+
+  admin-api:
+    image: spacehive-admin-api
+    build:
+      context: .
+      dockerfile: src/Admin/SpaceHive360.Admin.Api/Dockerfile
+    ports:
+      - "5001:8080"
+    env_file:
+      - .env
+    restart: always
+
+  member-api:
+    image: spacehive-member-api
+    build:
+      context: .
+      dockerfile: src/Member/SpaceHive360.Member.Api/Dockerfile
+    ports:
+      - "5002:8080"
+    env_file:
+      - .env
+    restart: always
+
+  superadmin-api:
+    image: spacehive-superadmin-api
+    build:
+      context: .
+      dockerfile: src/SuperAdmin/SpaceHive360.SuperAdmin.Api/Dockerfile
+    ports:
+      - "5003:8080"
+    env_file:
+      - .env
+    restart: always
