@@ -26,6 +26,10 @@ jobs:
             # Create .env file
             echo "PostgreConnection=${{ secrets.POSTGRES_CONNECTION }}" > /app/spacehive/.env
             echo "ASPNETCORE_ENVIRONMENT=Production" >> /app/spacehive/.env
+            echo "JwtSettings__Secret=${{ secrets.JWT_SECRET }}" >> /app/spacehive/.env
+            echo "JwtSettings__Issuer=${{ secrets.JWT_ISSUER }}" >> /app/spacehive/.env
+            echo "JwtSettings__Audience=${{ secrets.JWT_AUDIENCE }}" >> /app/spacehive/.env
+            echo "JwtSettings__ExpiryMinutes=60" >> /app/spacehive/.env
 
             # Pull latest code
             cd /app/spacehive
