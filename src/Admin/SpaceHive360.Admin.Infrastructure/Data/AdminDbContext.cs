@@ -1,4 +1,6 @@
 using SpaceHive360.Admin.Domain.Entities;
+using SpaceHive360.Admin.Domain.Entities.Community;
+using SpaceHive360.SuperAdmin.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -33,6 +35,17 @@ namespace SpaceHive360.Admin.Infrastructure.Data
         public DbSet<MemberBookingDetail> BookingDetails { get; set; }
         public DbSet<MemberMembership> MemberMemberships { get; set; }
         public DbSet<MemberPayment> MemberPayments { get; set; }
+        
+        // Community
+        public DbSet<CommunityPost> CommunityPosts { get; set; }
+        public DbSet<CommunityComment> CommunityComments { get; set; }
+        public DbSet<CommunityLike> CommunityLikes { get; set; }
+        public DbSet<CommunityEvent> CommunityEvents { get; set; }
+        public DbSet<CommunityUserActivity> UserActivities { get; set; }
+
+        // Support / FAQ
+        public DbSet<FaqCategory> FaqCategories { get; set; }
+        public DbSet<Faq> Faqs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -48,6 +61,39 @@ namespace SpaceHive360.Admin.Infrastructure.Data
             modelBuilder.Entity<MemberBooking>().ToTable("tbl_member_bookings");
             modelBuilder.Entity<MemberBookingDetail>().ToTable("tbl_member_booking_details");
             modelBuilder.Entity<MemberMembership>().ToTable("tbl_member_memberships");
+            
+            // Support / FAQ Mapping
+            modelBuilder.Entity<FaqCategory>(entity =>
+            {
+                entity.ToTable("tbl_faq_category");
+                entity.HasKey(e => e.RecId);
+                entity.Property(e => e.RecId).HasColumnName("rec_id");
+                entity.Property(e => e.Name).HasColumnName("name");
+                entity.Property(e => e.Icon).HasColumnName("icon");
+                entity.Property(e => e.DisplayOrder).HasColumnName("display_order");
+                entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+                entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+            });
+
+            modelBuilder.Entity<Faq>(entity =>
+            {
+                entity.ToTable("tbl_faq");
+                entity.HasKey(e => e.RecId);
+                entity.Property(e => e.RecId).HasColumnName("rec_id");
+                entity.Property(e => e.FkCategory).HasColumnName("fk_category");
+                entity.Property(e => e.Question).HasColumnName("question");
+                entity.Property(e => e.Answer).HasColumnName("answer");
+                entity.Property(e => e.Steps).HasColumnName("steps");
+                entity.Property(e => e.IsActive).HasColumnName("is_active");
+                entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+                entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+                entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.Faqs)
+                    .HasForeignKey(d => d.FkCategory);
+            });
+
             // ✅ Membership Plan Mapping
             modelBuilder.Entity<PlanMembership>(entity =>
             {
@@ -99,6 +145,13 @@ namespace SpaceHive360.Admin.Infrastructure.Data
                           v => v
                       );
             });
+
+            // Community Mapping
+            modelBuilder.Entity<CommunityPost>().ToTable("tbl_community_post");
+            modelBuilder.Entity<CommunityComment>().ToTable("tbl_community_comment");
+            modelBuilder.Entity<CommunityLike>().ToTable("tbl_community_like");
+            modelBuilder.Entity<CommunityEvent>().ToTable("tbl_community_event");
+            modelBuilder.Entity<CommunityUserActivity>().ToTable("tbl_user_activity");
         }
     }
 }

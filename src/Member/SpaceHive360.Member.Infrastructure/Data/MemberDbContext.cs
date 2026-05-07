@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SpaceHive360.Member.Domain.Entities;
+using SpaceHive360.Member.Domain.Entities.Community;
 
 namespace SpaceHive360.Member.Infrastructure.Data
 {
@@ -26,6 +27,12 @@ namespace SpaceHive360.Member.Infrastructure.Data
         public DbSet<MemberBookingDetail> BookingDetails { get; set; }
         public DbSet<Workspace> Workspaces { get; set; }
 
+        // Community
+        public DbSet<CommunityPost> CommunityPosts { get; set; }
+        public DbSet<CommunityComment> CommunityComments { get; set; }
+        public DbSet<CommunityLike> CommunityLikes { get; set; }
+        public DbSet<CommunityEvent> CommunityEvents { get; set; }
+
         public DbSet<UserActivity> UserActivities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,6 +50,12 @@ namespace SpaceHive360.Member.Infrastructure.Data
             modelBuilder.Entity<UserActivity>().ToTable("tbl_user_activity");
             modelBuilder.Entity<MemberMembership>().ToTable("tbl_member_memberships");
             modelBuilder.Entity<MemberPayment>().ToTable("tbl_member_payments");
+
+            // Community Mapping
+            modelBuilder.Entity<CommunityPost>().ToTable("tbl_community_post");
+            modelBuilder.Entity<CommunityComment>().ToTable("tbl_community_comment");
+            modelBuilder.Entity<CommunityLike>().ToTable("tbl_community_like");
+            modelBuilder.Entity<CommunityEvent>().ToTable("tbl_community_event");
 
             modelBuilder.Entity<UserPreferenceAmenity>()
                 .HasKey(upa => new { upa.FkPreference, upa.AmenityName });
