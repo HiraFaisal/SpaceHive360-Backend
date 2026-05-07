@@ -23,6 +23,7 @@ namespace SpaceHive360.Admin.Infrastructure
                 options.UseNpgsql(postgresConnection)
             );
             services.AddScoped<IAdminUserRepository, AdminUserRepository>();
+            services.AddScoped<IPasswordResetTokenRepository, PasswordResetTokenRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IWorkspaceTypeRepository, WorkspaceTypeRepository>();
             services.AddScoped<IWorkspaceRepository, WorkspaceRepository>();
@@ -37,6 +38,7 @@ namespace SpaceHive360.Admin.Infrastructure
             services.AddScoped<ICommunityService, CommunityService>();
             services.AddScoped<SpaceHive360.Admin.Application.Services.Files.IFileService, SpaceHive360.Admin.Infrastructure.Services.FileService>();
             services.AddScoped<SpaceHive360.SuperAdmin.Application.Interfaces.ISupportService, SpaceHive360.Admin.Infrastructure.Services.SupportService>();
+            services.AddScoped<SpaceHive360.Admin.Application.Services.Emails.IEmailService, SpaceHive360.Admin.Infrastructure.Services.Emails.EmailService>();
 
             return services;
         }

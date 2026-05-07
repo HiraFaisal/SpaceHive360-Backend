@@ -32,6 +32,10 @@ namespace SpaceHive360.Admin.Infrastructure.Repositories
             return await _context.AdminUsers.FirstOrDefaultAsync(u => u.RecId == id);
         }
 
-
+        public async Task UpdateAsync(AdminUser user)
+        {
+            _context.AdminUsers.Update(user);
+            await _context.SaveChangesAsync();
+        }
     }
 }
