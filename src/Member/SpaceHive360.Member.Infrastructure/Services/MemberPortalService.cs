@@ -148,5 +148,29 @@ namespace SpaceHive360.Member.Infrastructure.Services
 
             return ApiResponse.ErrorResponse("Plan not found");
         }
+
+        public async Task<ApiResponse> GetLocationsAsync()
+        {
+            var locations = await _context.Locations
+                .Where(l => l.IsActive)
+                .ToListAsync();
+
+            return ApiResponse.SuccessResponse(locations);
+        }
+
+        public async Task<ApiResponse> GetStatsAsync()
+        {
+            var activeCompaniesCount = await _context.Companies
+                .CountAsync(c => c.IsActive);
+
+            var totalLocationsCount = await _context.Locations
+                .CountAsync(l => l.IsActive);
+
+            return ApiResponse.SuccessResponse(new
+            {
+                activeCompanies = activeCompaniesCount,
+                totalLocations = totalLocationsCount
+            });
+        }
     }
 }

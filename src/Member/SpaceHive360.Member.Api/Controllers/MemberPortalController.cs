@@ -52,5 +52,19 @@ namespace SpaceHive360.Member.Api.Controllers
             var response = await _memberService.GetPlanByIdAsync(id);
             return response.Success ? Ok(response) : BadRequest(response);
         }
+
+        [HttpGet("locations")]
+        public async Task<IActionResult> GetLocations()
+        {
+            var response = await _memberService.GetLocationsAsync();
+            return response.Success ? Ok(response) : BadRequest(response);
+        }
+
+        [HttpGet("stats")]
+        public async Task<IActionResult> GetStats()
+        {
+            var response = await _memberService.GetStatsAsync();
+            return response.Success ? Ok(response) : BadRequest(response);
+        }
     }
 }

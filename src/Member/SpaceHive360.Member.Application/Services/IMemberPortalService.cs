@@ -10,5 +10,7 @@ namespace SpaceHive360.Member.Application.Services
         Task<ApiResponse> GetTopPlansAsync();
         Task<ApiResponse> GetPlansAsync(string? city, string? category);
         Task<ApiResponse> GetPlanByIdAsync(Guid id);
+        Task<ApiResponse> GetLocationsAsync();
+        Task<ApiResponse> GetStatsAsync();
     }
 }

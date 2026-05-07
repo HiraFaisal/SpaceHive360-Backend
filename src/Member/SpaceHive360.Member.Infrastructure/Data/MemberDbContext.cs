@@ -26,6 +26,7 @@ namespace SpaceHive360.Member.Infrastructure.Data
         public DbSet<MemberPayment> MemberPayments { get; set; }
         public DbSet<MemberBookingDetail> BookingDetails { get; set; }
         public DbSet<Workspace> Workspaces { get; set; }
+        public DbSet<Company> Companies { get; set; }
 
         // Community
         public DbSet<CommunityPost> CommunityPosts { get; set; }
