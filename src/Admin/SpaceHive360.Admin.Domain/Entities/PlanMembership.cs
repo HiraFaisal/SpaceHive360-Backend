@@ -78,5 +78,8 @@ namespace SpaceHive360.Admin.Domain.Entities
 
         [Column("isactive")]
         public bool IsActive { get; set; } = true;
+
+        [Column("is_ai_updated")]
+        public bool IsAiUpdated { get; set; } = false;
     }
 }

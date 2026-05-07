@@ -86,5 +86,8 @@ namespace SpaceHive360.Admin.Domain.Entities
 
         [Column("is_visible")]
         public bool IsVisible { get; set; } = true;
+
+        [Column("is_ai_updated")]
+        public bool IsAiUpdated { get; set; } = false;
     }
 }

@@ -33,10 +33,12 @@ namespace SpaceHive360.Admin.Infrastructure.Data
         public DbSet<MemberBookingDetail> BookingDetails { get; set; }
         public DbSet<MemberMembership> MemberMemberships { get; set; }
         public DbSet<MemberPayment> MemberPayments { get; set; }
+        public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AdminUser>().ToTable("tbl_admin_user");
+            modelBuilder.Entity<PasswordResetToken>().ToTable("tbl_password_reset_tokens");
             modelBuilder.Entity<Company>().ToTable("tbl_companies");
             modelBuilder.Entity<WorkspaceType>().ToTable("tbl_workspace_types");
             modelBuilder.Entity<Workspace>().ToTable("tbl_workspaces");
