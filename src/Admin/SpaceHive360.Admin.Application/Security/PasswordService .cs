@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,13 +12,13 @@ namespace SpaceHive360.Admin.Application.Security
 
         public string Hash(string password)
         {
-            return _hasher.HashPassword(null, password);
+            return _hasher.HashPassword(null!, password);
         }
 
         public bool Verify(string hash, string password)
         {
             var result = _hasher.VerifyHashedPassword(
-                null,
+                null!,
                 hash,
                 password
             );

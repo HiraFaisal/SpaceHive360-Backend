@@ -22,6 +22,7 @@ namespace SpaceHive360.SuperAdmin.Infrastructure
 
             services.AddScoped<ISuperAdminUserRepository, SuperAdminUserRepository>();
             services.AddScoped<ISuperAdminCompanyRepository, SuperAdminCompanyRepository>();
+            services.AddScoped<SpaceHive360.SuperAdmin.Application.Interfaces.ISupportService, SpaceHive360.SuperAdmin.Infrastructure.Services.SupportService>();
 
             return services;
         }

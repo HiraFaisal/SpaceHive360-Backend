@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using SpaceHive360.Member.Application.Services;
 using SpaceHive360.Member.Infrastructure.Data;
 using SpaceHive360.Member.Infrastructure.Services;
+using SpaceHive360.Member.Application.Services.Community;
+using SpaceHive360.Member.Infrastructure.Services.Community;
 
 namespace SpaceHive360.Member.Infrastructure
 {
@@ -28,6 +30,7 @@ namespace SpaceHive360.Member.Infrastructure
             services.AddScoped<IMembershipService, MembershipService>();
             services.AddScoped<IInventoryService, InventoryService>();
             services.AddScoped<IFileService, FileService>();
+            services.AddScoped<ICommunityService, CommunityService>();
 
             services.AddHttpClient<Application.Services.Ai.IAiService, Services.Ai.AiService>();
 

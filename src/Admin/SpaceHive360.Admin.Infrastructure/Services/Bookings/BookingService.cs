@@ -165,11 +165,14 @@ namespace SpaceHive360.Admin.Infrastructure.Services.Bookings
 
             var activeMembers = bookingUsers.Union(membershipUsers).Count();
 
+            var today = DateTime.UtcNow.Date;
+            var tomorrow = today.AddDays(1);
+
             var totalBookingsToday = await (from b in _context.MemberBookings
                                             join pb in _context.PlanBookings on b.FkPlan equals pb.RecId into pbs from pb in pbs.DefaultIfEmpty()
                                             join pm in _context.PlanMemberships on b.FkPlan equals pm.RecId into pms from pm in pms.DefaultIfEmpty()
                                             where ((pb != null && pb.FkCompany == companyId) || (pm != null && pm.FkCompany == companyId))
-                                            && b.BookingDate.HasValue && b.BookingDate.Value.Date == DateTime.UtcNow.Date
+                                            && b.BookingDate >= today && b.BookingDate < tomorrow
                                             select b).CountAsync();
 
             // 🟢 New Occupancy Logic

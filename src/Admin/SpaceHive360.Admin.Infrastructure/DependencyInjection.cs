@@ -5,6 +5,8 @@ using SpaceHive360.Admin.Domain.IRepositories;
 using ApplicationRepo = SpaceHive360.Admin.Application.IRepositories;
 using SpaceHive360.Admin.Infrastructure.Data;
 using SpaceHive360.Admin.Infrastructure.Repositories;
+using SpaceHive360.Admin.Application.Services.Community;
+using SpaceHive360.Admin.Infrastructure.Services.Community;
 
 namespace SpaceHive360.Admin.Infrastructure
 {
@@ -33,6 +35,9 @@ namespace SpaceHive360.Admin.Infrastructure
             services.AddScoped<IPlanMembershipRepository, PlanMembershipRepository>();
             services.AddScoped<ApplicationRepo.IFeedbackRepository, FeedbackRepository>();
             services.AddScoped<SpaceHive360.Admin.Application.Services.Bookings.IBookingService, SpaceHive360.Admin.Infrastructure.Services.Bookings.BookingService>();
+            services.AddScoped<ICommunityService, CommunityService>();
+            services.AddScoped<SpaceHive360.Admin.Application.Services.Files.IFileService, SpaceHive360.Admin.Infrastructure.Services.FileService>();
+            services.AddScoped<SpaceHive360.SuperAdmin.Application.Interfaces.ISupportService, SpaceHive360.Admin.Infrastructure.Services.SupportService>();
             services.AddScoped<SpaceHive360.Admin.Application.Services.Emails.IEmailService, SpaceHive360.Admin.Infrastructure.Services.Emails.EmailService>();
 
             return services;

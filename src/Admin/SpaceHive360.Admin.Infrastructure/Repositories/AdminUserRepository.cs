@@ -22,7 +22,7 @@ namespace SpaceHive360.Admin.Infrastructure.Repositories
             await _context.AdminUsers.AddAsync(user);
             await _context.SaveChangesAsync();
         }
-        public async Task<AdminUser> GetByEmailAsync(string email)
+        public async Task<AdminUser?> GetByEmailAsync(string email)
         {
             return await _context.AdminUsers.FirstOrDefaultAsync(u => u.Email == email);
         }
